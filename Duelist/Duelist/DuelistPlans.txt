@@ -1,0 +1,3 @@
+
+This file is meant to document the intended future features not outlined in the
+    subdirectory *ideas.txts

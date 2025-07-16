@@ -1,0 +1,7 @@
+
+First I'm going to build a button
+
+Then I'm going to build a list
+Then I need to connect extraneous functions to show their capability
+
+

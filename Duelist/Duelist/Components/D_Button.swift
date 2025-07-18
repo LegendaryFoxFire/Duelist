@@ -16,10 +16,13 @@ struct D_Button<Label: View>: View {
         Button(action: action) {
             ZStack {
                 Image("backdrop_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(height: Globals.StandardHeight)
-                    .clipped()
+                    .resizable()    //Makes the image scalable — this is necessary before applying resizing modifiers like .frame() or .aspectRatio().
+                    .aspectRatio(contentMode: .fill) //Scales the image to fill the container’s dimensions, cropping parts if necessary to maintain its aspect ratio.
+
+                    .frame(height: Globals.StandardHeight) //Sets a fixed height for the image. Width will be determined by the parent container.
+
+                    .clipped()  //Cuts off any part of the image that overflows its frame bounds.
+
                     .cornerRadius(Globals.CornerRadius)
                 label()
                     .foregroundStyle(.white)
@@ -31,10 +34,10 @@ struct D_Button<Label: View>: View {
                             .padding(.vertical, Globals.SmallVPadding)
                     )
             }
-            .contentShape(Rectangle())
-            .overlay(
+            .contentShape(Rectangle())  //Defines the tappable/touchable area of the view
+            .overlay(     // This gives a visual feedback effect when pressing the button — a colored outline appears.
                 RoundedRectangle(cornerRadius: Globals.CornerRadius)
-                    .stroke(isPressed ? ThemeColors.accent : Color.clear, lineWidth: 2)
+                    .stroke(isPressed ? ThemeColors.accent : Color.clear, lineWidth: 2)       // If isPressed is true, the stroke is ThemeColors.accent. If not pressed, it’s Color.clear, meaning no visible border.
             )
             .simultaneousGesture(
                 DragGesture(minimumDistance: 0)

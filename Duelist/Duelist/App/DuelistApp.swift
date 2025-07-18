@@ -11,7 +11,7 @@ import SwiftUI
 struct DuelistApp: App {
     var body: some Scene {
         WindowGroup {
-            PracticeView()
+            Login()
         }
     }
 }

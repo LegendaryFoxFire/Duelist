@@ -1,5 +1,5 @@
 //
-//  Login Screen.swift
+//  Register_V.swift
 //  Duelist
 //
 //  Created by Sam on 18/07/25.
@@ -7,14 +7,15 @@
 
 import SwiftUI
 
-struct Login: View {
+struct Register: View {
     @State private var email: String = ""
     @State private var password: String = ""
+    @State private var reEnterPassword: String = ""
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 30) {
-                D_Label(title: "Login")
+                D_Label(title: "Register")
                     .font(.largeTitle)
                 
                 VStack(alignment: .leading, spacing: 20) {
@@ -23,17 +24,20 @@ struct Login: View {
                     
                     SecureField("Password", text: $password) //securefield also expects a binding
                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                    
+                    SecureField("Re-Enter Password", text: $reEnterPassword) //securefield also expects a binding
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
                 
                 D_Button(action: {
-                    // FIXME: implement login database logic
-                    print("Login not implemented")
+                    // FIXME: implement Register database logic
+                    print("Register not implemented")
                 }) {
-                    Text("Login")
+                    Text("Register")
                 }
                 
-                NavigationLink(destination: Register()){
-                    Text("Register")
+                NavigationLink(destination: Login()){
+                    Text("Back to Login")
                 }
                 
                 Image("swords")
@@ -47,6 +51,5 @@ struct Login: View {
 }
 
 #Preview {
-    Login()
+    Register()
 }
-

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct Title_Screen: View {
+    @EnvironmentObject var nav: NavigationHandler
+    
     @State private var navigateToLogin = false
 
     var body: some View {
@@ -22,9 +24,9 @@ struct Title_Screen: View {
             }
             .onTapGesture {
                 navigateToLogin = true
-            }
-            .navigationDestination(isPresented: $navigateToLogin){
-                Login()
+                NavigationHandler.animatePageChange {
+                    nav.currentPage = .login
+                }
             }
         }
     }

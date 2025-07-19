@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct DuelistApp: App {
+    @StateObject var navHandler = NavigationHandler()
+    
     var body: some Scene {
         WindowGroup {
-            Login()
+            ContentView()
+                .environmentObject(navHandler)
         }
     }
 }

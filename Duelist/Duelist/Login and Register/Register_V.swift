@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct Register: View {
+    @EnvironmentObject var nav: NavigationHandler
+    
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var reEnterPassword: String = ""
 
     var body: some View {
-        NavigationStack {
+        BackButton(label:"Login", destination: .login) {
             VStack(spacing: 30) {
                 D_Label(title: "Register")
                     .font(.largeTitle)
@@ -34,10 +36,6 @@ struct Register: View {
                     print("Register not implemented")
                 }) {
                     Text("Register")
-                }
-                
-                NavigationLink(destination: Login()){
-                    Text("Back to Login")
                 }
                 
                 Image("swords")

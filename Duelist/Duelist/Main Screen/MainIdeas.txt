@@ -1,0 +1,20 @@
+Implementing Navigation Structure
+
+Title
+Login
+Register
+
+Dual Screen
+Store Page
+LeaderBoard
+
+Settings
+Profile
+Game Screen
+
+PostGame
+Friends List
+Other Profile
+
+Add Friends
+

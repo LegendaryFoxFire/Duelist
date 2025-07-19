@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct Login: View {
+    @EnvironmentObject var nav: NavigationHandler
+     
     @State private var email: String = ""
     @State private var password: String = ""
 
@@ -33,17 +35,24 @@ struct Login: View {
                     Text("Login")
                 }
                 
-                NavigationLink(destination: Register()){
-                    Text("Register")
-                }
+//              Subsequent Views pushed onto this nav stack would use
+//              the following code segment in their respective views:
                 
+//              NavigationLink(destination: ThingView(nav: nav)) {
+//                  Text("Go to Thing")
+//              }
+                
+                Button("Register") {
+                    NavigationHandler.animatePageChange {
+                        nav.currentPage = .register
+                    }
+                }
                 
                 Image("swords")
                     .resizable()
                     .scaledToFit()
             }
             .padding()
-            .navigationBarBackButtonHidden()
         }
     }
 }
@@ -51,4 +60,3 @@ struct Login: View {
 #Preview {
     Login()
 }
-

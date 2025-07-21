@@ -1,19 +1,18 @@
 //
-//  DuelSummary_V.swift
+//  searchFriends_V.swift
 //  Duelist
 //
-//  Created by Sam on 19/07/25.
+//  Created by Sam on 21/07/25.
 //
 
 import SwiftUI
 
-struct DuelSummary_V: View {
-    @EnvironmentObject var nav: NavigationHandler
+struct searchFriends_V: View {
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
 #Preview {
-    DuelSummary_V()
+    searchFriends_V()
 }

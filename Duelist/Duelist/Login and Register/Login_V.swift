@@ -30,7 +30,9 @@ struct Login: View {
                 
                 D_Button(action: {
                     // FIXME: implement login database logic
-                    print("Login not implemented")
+                    NavigationHandler.animatePageChange {
+                        nav.currentPage = .mainMenu
+                    }
                 }) {
                     Text("Login")
                 }

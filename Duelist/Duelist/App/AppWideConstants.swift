@@ -17,4 +17,5 @@ enum Globals {
     static let SmallHPadding: CGFloat = 16;
     static let StandardHeight: CGFloat = 40;
     static let StandardWidth: CGFloat = 80;
+    static let LargeHSpacing: CGFloat = 150;
 }

@@ -17,6 +17,7 @@ enum NavigationPage {
     case dualScreen
     case storePage
     case leaderboard
+    case mainMenu
 
     // MARK: - User Settings
     case settings
@@ -24,12 +25,14 @@ enum NavigationPage {
 
     // MARK: - Gameplay
     case gameScreen
-    case postGame
+    case resultsScreen
+    case postGameSummary
 
     // MARK: - Social
     case friendsList
     case otherProfile
     case addFriends
+    case searchFriends
     
     @ViewBuilder
     func view(nav: NavigationHandler) -> some View {
@@ -40,26 +43,33 @@ enum NavigationPage {
             Login()
         case .register:
             Register()
+        case .mainMenu:
+            Main_V()
         case .dualScreen:
             NavMissing()
         case .storePage:
-            NavMissing()
+            Store_V()
         case .leaderboard:
-            NavMissing()
+            Leaderboard_V()
         case .settings:
-            NavMissing()
+            ProfileSettings_V()
         case .profile:
-            NavMissing()
+            Profile_V()
         case .gameScreen:
             NavMissing()
-        case .postGame:
-            NavMissing()
+        case .resultsScreen:
+            DuelResults_V()
+        case .postGameSummary:
+            DuelSummary_V()
         case .friendsList:
-            NavMissing()
+            FriendsList_V()
+        case .searchFriends:
+            searchFriends_V()
         case .otherProfile:
-            NavMissing()
+            //OtherProfile_V()
+            Main_V()
         case .addFriends:
-            NavMissing()
+            FriendRequests_V()
         }
     }
 }

@@ -12,9 +12,9 @@ import SwiftUI
 
 struct FriendRequests_V: View {
     @EnvironmentObject var nav: NavigationHandler
-    @State private var searchText: String = ""
     @State private var friendRequestLocal = friendRequests
-    @State private var sentRequests: [Friend] = []
+    
+
     
     var body: some View {
         BackButton(label:"Friends List", destination: .friendsList) {
@@ -38,29 +38,7 @@ struct FriendRequests_V: View {
                                              })
                         }
                     }
-                    Section(header: Text("Search Global Users")){
-                        // Simulate a global users list filter (add search logic if needed)
-                        ForEach(globalUsers, id: \.id) { friend in
-                            //FIXME: need to filter out users that are already in friendsList
-                            HStack {
-                                Image(friend.image)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 50, height: 50)
-                                    .clipShape(Circle())
-                                    .overlay(Circle().stroke(style: StrokeStyle(lineWidth: 2)))
-                                Text(friend.friendsUserID)
-                                Spacer()
-                                Button(sentRequests.contains(where: { $0.id == friend.id }) ? "Requested" : "Add") {
-                                    sentRequests.append(friend)
-                                    print("Sent friend request to \(friend.friendsUserID)")
-                                }
-                                .disabled(sentRequests.contains(where: { $0.id == friend.id }))
-                                .buttonStyle(BorderlessButtonStyle())
-                            }
-                        }
-                        
-                    }
+                    
                 }
             }
         }

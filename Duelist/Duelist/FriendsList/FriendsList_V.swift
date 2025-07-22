@@ -24,12 +24,10 @@ struct FriendsList_V: View {
         }
     }
     
-    
+    //FIXME: Can't decide if I like the search bar at the top like this, or connected to the list like in SendFriendRequests_V
     var body: some View {
         VStack{
-            TextField("Search friends...", text: $searchText)
-                        .padding(.horizontal)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+            D_TextField(text: $searchText, type: .search, keyword: "friends")
 
             List {
                 ForEach(filteredFriends) { friend in
@@ -41,12 +39,7 @@ struct FriendsList_V: View {
 //                        }
                     } label: {
                         HStack {
-                            Image(friend.image)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 50, height: 50)
-                                .clipShape(Circle())
-                                .overlay(Circle().stroke(style: StrokeStyle(lineWidth: 2)))
+                            ProfilePhotoTemplate(size: .small, image: friend.image)
                             Text(String(friend.friendsUserID))
                             Spacer()
                             }
@@ -57,19 +50,24 @@ struct FriendsList_V: View {
             }
             
             HStack(spacing: Globals.LargeHSpacing){
-                Button("Add Friend"){
+                Button("View Friend Requests"){
                     NavigationHandler.animatePageChange {
-                        nav.currentPage = .addFriends
+                        nav.currentPage = .viewFriendRequests
                     }
                 }
-                Button("Main Menu"){
+                Button("Send Friend Requests"){
                     NavigationHandler.animatePageChange {
-                        nav.currentPage = .mainMenu
+                        nav.currentPage = .sendFriendRequests
                     }
                 }
                 
             }
             .padding(Globals.SmallHPadding)
+            Button("Main Menu"){
+                NavigationHandler.animatePageChange {
+                    nav.currentPage = .mainMenu
+                }
+            }
         }
     }
 }

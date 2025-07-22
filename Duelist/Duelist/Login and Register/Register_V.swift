@@ -21,19 +21,16 @@ struct Register: View {
                     .font(.largeTitle)
                 
                 VStack(alignment: .leading, spacing: 20) {
-                    TextField("Email", text: $email)   //textfield expects a binding
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                    
-                    SecureField("Password", text: $password) //securefield also expects a binding
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                    
-                    SecureField("Re-Enter Password", text: $reEnterPassword) //securefield also expects a binding
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    D_TextField(text: $email, type: .normal, keyword: "Email")
+                    D_TextField(text: $password, type: .secure, keyword: "Password")
+                    D_TextField(text: $reEnterPassword, type: .secure, keyword: "Re-Enter Password")
                 }
                 
                 D_Button(action: {
                     // FIXME: implement Register database logic
-                    print("Register not implemented")
+                    NavigationHandler.animatePageChange {
+                        nav.currentPage = .mainMenu
+                    }
                 }) {
                     Text("Register")
                 }

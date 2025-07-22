@@ -14,12 +14,7 @@ struct FriendRequestListRow: View {
 
     var body: some View {
         HStack {
-            Image(friend.image)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 50, height: 50)
-                .clipShape(Circle())
-                .overlay(Circle().stroke(style: StrokeStyle(lineWidth: 2)))
+            ProfilePhotoTemplate(size: .small, image: friend.image)
             Text(friend.friendsUserID)
             Spacer()
             Button("Accept", action: onAccept)
@@ -31,7 +26,12 @@ struct FriendRequestListRow: View {
 }
 
 #Preview {
-    FriendRequestListRow(friend: Friend(id: UUID(), image: "profile_photo_10", friendsUserID: "Jimbo34", numberOfWins: 10, rank: 200),
+    FriendRequestListRow(friend: Friend(
+        id: UUID(),
+        image: "profile_photo_10",
+        friendsUserID: "Jimbo34",
+        numberOfWins: 10,
+        rank: 200),
         onAccept: {
         print("friend accepted")
     }, onReject: {

@@ -17,13 +17,8 @@ struct Profile_V: View {
                 Text("Profile")
                     .font(.largeTitle)
                     .bold(true)
-                Image("profile_photo_4")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .clipShape(Circle())
-                    .overlay(
-                        Circle()
-                            .stroke(style: StrokeStyle(lineWidth: 4)))
+                //FIXME: Need to load image from database
+                ProfilePhotoTemplate(size: .large, image: "profile_photo_3")
             }
             
 

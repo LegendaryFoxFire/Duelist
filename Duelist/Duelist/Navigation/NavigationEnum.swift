@@ -31,7 +31,8 @@ enum NavigationPage {
     // MARK: - Social
     case friendsList
     case otherProfile
-    case addFriends
+    case viewFriendRequests
+    case sendFriendRequests
     
     @ViewBuilder
     func view(nav: NavigationHandler) -> some View {
@@ -65,8 +66,10 @@ enum NavigationPage {
         case .otherProfile:
             //OtherProfile_V()
             Main_V()
-        case .addFriends:
+        case .viewFriendRequests:
             FriendRequests_V()
+        case .sendFriendRequests:
+            SendFriendRequests_V()
         }
     }
 }

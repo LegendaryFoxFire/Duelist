@@ -20,8 +20,10 @@ enum NavigationPage {
     case mainMenu
 
     // MARK: - User Settings
-    case settings
-    case profile
+    case settings(friend:Friend)
+    case profile(friend: Friend)
+    case otherProfile(friend: Friend)
+    case leaderboardProfile(friend: Friend)
 
     // MARK: - Gameplay
     case gameScreen
@@ -30,7 +32,6 @@ enum NavigationPage {
 
     // MARK: - Social
     case friendsList
-    case otherProfile
     case viewFriendRequests
     case sendFriendRequests
     
@@ -51,10 +52,14 @@ enum NavigationPage {
             Store_V()
         case .leaderboard:
             Leaderboard_V()
-        case .settings:
-            ProfileSettings_V()
-        case .profile:
-            Profile_V()
+        case .leaderboardProfile(friend: let friend):
+            LeaderboardProfile(friend: friend)
+        case .settings(let friend):
+            ProfileSettings_V(friend: friend)
+        case .profile(let friend):
+            Profile_V(friend: friend)
+        case .otherProfile(let friend):
+            OtherProfile_V(friend: friend)
         case .gameScreen:
             NavMissing()
         case .resultsScreen:
@@ -63,9 +68,6 @@ enum NavigationPage {
             DuelSummary_V()
         case .friendsList:
             FriendsList_V()
-        case .otherProfile:
-            //OtherProfile_V()
-            Main_V()
         case .viewFriendRequests:
             FriendRequests_V()
         case .sendFriendRequests:

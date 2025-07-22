@@ -1,17 +1,18 @@
 //
-//  OtherProfile_V.swift
+//  LeaderboardProfile.swift
 //  Duelist
 //
-//  Created by Sam on 19/07/25.
+//  Created by Sam on 22/07/25.
 //
 
 import SwiftUI
 
-struct OtherProfile_V: View {
+struct LeaderboardProfile: View {
+
     @EnvironmentObject var nav: NavigationHandler
     var friend: Friend  //FIXME: Need to load user from database
     var body: some View {
-        BackButton(label:"Friends List", destination: .friendsList) {
+        BackButton(label:"Leaderboard", destination: .leaderboard) {
             VStack(spacing: Globals.StandardHSpacing){
                 
                 VStack{
@@ -65,5 +66,5 @@ struct OtherProfile_V: View {
 }
 
 #Preview {
-    OtherProfile_V(friend: Friend(id: UUID(), image: "profile_photo_4", friendsUserID: "BillyJoseph456", numberOfWins: 10, rank: 129))
+    LeaderboardProfile(friend: user02)
 }

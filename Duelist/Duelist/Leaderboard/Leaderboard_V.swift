@@ -9,8 +9,51 @@ import SwiftUI
 
 struct Leaderboard_V: View {
     @EnvironmentObject var nav: NavigationHandler
+    @State private var searchText: String = ""
+    let leaderboard: [Friend] = globalUsers.sorted { $0.numberOfWins > $1.numberOfWins }
+    var filteredLeaderboard: [Friend]{
+        if searchText.isEmpty {
+            return leaderboard
+        } else {
+            return leaderboard.filter {
+                $0.friendsUserID.lowercased().contains(searchText.lowercased())
+            }
+        }
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        BackButton(label:"Main Menu", destination: .mainMenu) {
+            VStack{
+                D_TextField(text: $searchText, type: .search, keyword: "friends")
+                
+                List {
+                    HStack{
+                        Text("User")
+                            .padding(.leading, 50)
+                        Spacer()
+                        Text("Number of Wins")
+                    }
+                    ForEach(filteredLeaderboard) { friend in
+                        Button {
+                            print("Friend Selected: \(friend.friendsUserID)")
+                            NavigationHandler.animatePageChange {
+                                nav.currentPage = .leaderboardProfile(friend: friend)
+                            }
+                            
+                        } label: {
+                            HStack {
+                                ProfilePhotoTemplate(size: .small, image: friend.image)
+                                Text(String(friend.friendsUserID))
+                                Spacer()
+                                Text(String(friend.numberOfWins))
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -33,10 +33,9 @@ struct FriendsList_V: View {
                 ForEach(filteredFriends) { friend in
                     Button {
                         print("Friend Selected: \(friend.friendsUserID)")
-//                        NavigationHandler.animatePageChange {
-//                            nav.currentPage = .otherProfile
-//                            //FIXME: Replace with "other profile" and pass the friend selected
-//                        }
+                        NavigationHandler.animatePageChange {
+                            nav.currentPage = .otherProfile(friend: friend)
+                        }
                     } label: {
                         HStack {
                             ProfilePhotoTemplate(size: .small, image: friend.image)

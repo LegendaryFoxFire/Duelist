@@ -7,8 +7,11 @@
 
 import SwiftUI
 
+var currentLoggedInUser: Friend = user04 //FIXME: Need to update the user info after they log in. Needs to be accessed by other views too
+
 struct Main_V: View {
     @EnvironmentObject var nav: NavigationHandler
+    
     var body: some View {
         VStack{
             Image("swords")
@@ -36,7 +39,7 @@ struct Main_V: View {
             D_Button(action: {
                 // FIXME: implement login database logic
                 NavigationHandler.animatePageChange {
-                    nav.currentPage = .profile
+                    nav.currentPage = .profile(friend: currentLoggedInUser)
                 }
             }) {
                 Text("Profile")

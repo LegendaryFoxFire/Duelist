@@ -11,7 +11,7 @@ struct SendFriendRequests_V: View {
     @State private var searchText: String = ""
     @State private var sentRequests: [Friend] = []
     
-    var potentialNewFriends: [Friend] = filterFriends(listToBeFiltered: globalUsers, friendsToFilter: friendList)
+    var potentialNewFriends: [Friend] = filterFriends(listToBeFiltered: filterFriends(listToBeFiltered: globalUsers, friendsToFilter: friendList), friendsToFilter: friendRequests)    //filter out current friends and current friend requests
     var filteredPotentialNewFriends: [Friend] {
         if searchText.isEmpty {
             return potentialNewFriends
@@ -36,6 +36,7 @@ struct SendFriendRequests_V: View {
                             Button(sentRequests.contains(where: { $0.id == friend.id }) ? "Requested" : "Add") {
                                 //FIXME: Going to have to do database stuff when a friend request is sent
                                 sentRequests.append(friend)
+                                
                                 print("Sent friend request to \(friend.friendsUserID)")
                             }
                             .disabled(sentRequests.contains(where: { $0.id == friend.id }))

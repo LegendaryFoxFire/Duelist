@@ -34,6 +34,7 @@ struct SendFriendRequests_V: View {
                         Text(friend.friendsUserID)
                         Spacer()
                         Button(sentRequests.contains(where: { $0.id == friend.id }) ? "Requested" : "Add") {
+                            //FIXME: Going to have to do database stuff when a friend request is sent
                             sentRequests.append(friend)
                             print("Sent friend request to \(friend.friendsUserID)")
                         }
@@ -43,9 +44,7 @@ struct SendFriendRequests_V: View {
                     }
                 }
             }
-            
         }
-         
     }
 }
 

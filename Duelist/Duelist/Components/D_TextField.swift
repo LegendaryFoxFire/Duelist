@@ -41,10 +41,10 @@ struct D_TextField: View {
             TextField(
                 "",
                 text: $text,
-                prompt: Text("    Search \(keyword)...")
+                prompt: Text("Search \(keyword)...")
             )
             .textFieldStyle(RoundedBorderTextFieldStyle())
-            .padding(Globals.SmallHPadding)
+            .padding(.leading, 40)
             .overlay(
                 HStack {
                     Image(systemName: "magnifyingglass")
@@ -62,7 +62,7 @@ struct D_TextField: View {
         @State private var textFieldContents = ""
 
         var body: some View {
-            D_TextField(text: $textFieldContents, type: .normal, keyword: "Friends List")
+            D_TextField(text: $textFieldContents, type: .search, keyword: "Friends List")
         }
     }
 

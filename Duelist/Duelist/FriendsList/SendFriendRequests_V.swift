@@ -23,24 +23,25 @@ struct SendFriendRequests_V: View {
     }
     
     var body: some View {
-        
-        List{
-            VStack{
-                D_TextField(text: $searchText, type: .search, keyword: "Global Users")
-                
-                ForEach(filteredPotentialNewFriends, id: \.id) { friend in
-                    HStack {
-                        ProfilePhotoTemplate(size: .small, image: friend.image)
-                        Text(friend.friendsUserID)
-                        Spacer()
-                        Button(sentRequests.contains(where: { $0.id == friend.id }) ? "Requested" : "Add") {
-                            //FIXME: Going to have to do database stuff when a friend request is sent
-                            sentRequests.append(friend)
-                            print("Sent friend request to \(friend.friendsUserID)")
+        BackButton(label:"Friends List", destination: .friendsList) {
+            List{
+                VStack{
+                    D_TextField(text: $searchText, type: .search, keyword: "Global Users")
+                    
+                    ForEach(filteredPotentialNewFriends, id: \.id) { friend in
+                        HStack {
+                            ProfilePhotoTemplate(size: .small, image: friend.image)
+                            Text(friend.friendsUserID)
+                            Spacer()
+                            Button(sentRequests.contains(where: { $0.id == friend.id }) ? "Requested" : "Add") {
+                                //FIXME: Going to have to do database stuff when a friend request is sent
+                                sentRequests.append(friend)
+                                print("Sent friend request to \(friend.friendsUserID)")
+                            }
+                            .disabled(sentRequests.contains(where: { $0.id == friend.id }))
+                            .buttonStyle(BorderlessButtonStyle())
+                            .padding()
                         }
-                        .disabled(sentRequests.contains(where: { $0.id == friend.id }))
-                        .buttonStyle(BorderlessButtonStyle())
-                        .padding()
                     }
                 }
             }

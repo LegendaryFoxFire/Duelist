@@ -20,7 +20,7 @@ struct Register: View {
                 D_Label(title: "Register")
                     .font(.largeTitle)
                 
-                VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading) {
                     D_TextField(text: $email, type: .normal, keyword: "Email")
                     D_TextField(text: $password, type: .secure, keyword: "Password")
                     D_TextField(text: $reEnterPassword, type: .secure, keyword: "Re-Enter Password")

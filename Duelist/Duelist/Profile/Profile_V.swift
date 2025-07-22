@@ -63,11 +63,6 @@ struct Profile_V: View {
                 )
                 .padding(.horizontal)
                 
-                //Not sure how we want to do the navigation now
-                Button("View Friends") {
-                    nav.currentPage = .friendsList
-                }
-                
                 Button("Settings") {
                     nav.currentPage = .settings
                 }

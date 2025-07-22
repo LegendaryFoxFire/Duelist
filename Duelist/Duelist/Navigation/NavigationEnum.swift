@@ -32,7 +32,6 @@ enum NavigationPage {
     case friendsList
     case otherProfile
     case addFriends
-    case searchFriends
     
     @ViewBuilder
     func view(nav: NavigationHandler) -> some View {
@@ -63,8 +62,6 @@ enum NavigationPage {
             DuelSummary_V()
         case .friendsList:
             FriendsList_V()
-        case .searchFriends:
-            searchFriends_V()
         case .otherProfile:
             //OtherProfile_V()
             Main_V()

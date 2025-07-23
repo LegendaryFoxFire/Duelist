@@ -9,8 +9,29 @@ import SwiftUI
 
 struct Store_V: View {
     @EnvironmentObject var nav: NavigationHandler
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        BackButton(label:"Main Menu", destination: .mainMenu) {
+            HStack {
+                List{
+                    ForEach(swordList) { sword in
+                        Button{
+                            print("Pressed \(sword.name)")
+                        } label: {
+                            HStack{
+                                Image(sword.name)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 100, height: 100)
+                                Spacer()
+                                Text(sword.numWins)
+                                    .foregroundColor(.black)
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

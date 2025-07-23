@@ -26,3 +26,7 @@ struct TitleScreen: View{
         }
     }
 }
+
+#Preview {
+    TitleScreen()
+}

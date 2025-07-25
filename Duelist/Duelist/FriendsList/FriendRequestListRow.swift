@@ -22,6 +22,7 @@ struct FriendRequestListRow: View {
             Button("Reject", action: onReject)
                 .buttonStyle(BorderlessButtonStyle())
         }
+        .padding()
     }
 }
 

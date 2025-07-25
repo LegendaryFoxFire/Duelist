@@ -63,7 +63,7 @@ struct OtherProfile_V: View {
                         .stroke(Color.black, lineWidth: 2)
                         .background(Color.black.opacity(0.15))
                 )
-                .padding(.horizontal)
+                .padding()
             }
         }
     }

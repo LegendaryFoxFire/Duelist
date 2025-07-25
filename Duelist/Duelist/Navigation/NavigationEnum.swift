@@ -10,8 +10,8 @@ import SwiftUI
 enum NavigationPage {
     // MARK: - Authentication
     case title
-    case login
-    case register
+    case login(email: String, password: String)
+    case register(email: String, password: String)
 
     // MARK: - Main Screens
     case dualScreen
@@ -39,11 +39,11 @@ enum NavigationPage {
     func view(nav: NavigationHandler) -> some View {
         switch self {
         case .title:
-            TitleScreen()
-        case .login:
-            Login()
-        case .register:
-            Register()
+            Title_Screen()
+        case .login(email: let email, password: let password):
+            Login(email: email, password: password)
+        case .register(email: let email, password: let password):
+            Register(email: email, password: password)
         case .mainMenu:
             Main_V()
         case .dualScreen:

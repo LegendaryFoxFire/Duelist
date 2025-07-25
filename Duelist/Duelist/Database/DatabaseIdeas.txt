@@ -5,5 +5,7 @@
 //  Created by John Bukoski on 7/15/25.
 //
 
-okay
+schemas down for now
+working on creating functions
+and plugging into screens
 

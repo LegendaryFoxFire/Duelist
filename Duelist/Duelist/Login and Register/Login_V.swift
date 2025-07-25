@@ -9,10 +9,18 @@
 import SwiftUI
 
 struct Login: View {
+    @StateObject private var authManager = AuthManager()
     @EnvironmentObject var nav: NavigationHandler
      
     @State private var email: String = ""
     @State private var password: String = ""
+    @State private var showError = false
+    @State private var errorMessage = ""
+    
+    init(email: String = "", password: String = "") {
+        _email = State(initialValue: email)
+        _password = State(initialValue: password)
+    }
 
     var body: some View {
         NavigationStack {
@@ -20,38 +28,35 @@ struct Login: View {
                 D_Label(title: "Login")
                     .font(.largeTitle)
                 
-                VStack(alignment: .leading) {
+                VStack() {
                     D_TextField(text: $email, type: .normal, keyword: "Email")
-                    
+
                     D_TextField(text: $password, type: .secure, keyword: "Password")
                 }
                 
                 D_Button(action: {
-                    // FIXME: implement login database logic
-                    NavigationHandler.animatePageChange {
-                        nav.currentPage = .mainMenu
+                    Task {
+                        do {
+                            try await authManager.signIn(email: email, password: password)
+                        } catch {
+                            errorMessage = error.localizedDescription
+                            showError = true
+                        }
                     }
                 }) {
                     Text("Login")
                 }
-                
-//              Subsequent Views pushed onto this nav stack would use
-//              the following code segment in their respective views:
-                
-//              NavigationLink(destination: ThingView(nav: nav)) {
-//                  Text("Go to Thing")
-//              }
-                
-                Button("Register") {
-                    NavigationHandler.animatePageChange {
-                        nav.currentPage = .register
-                    }
-                }
+                NavigationLink("Register", destination: Register(email: email, password: password))
                 
                 Image("swords")
                     .resizable()
                     .scaledToFit()
             }
+            .alert("Error", isPresented: $showError) {
+                        Button("OK") { }
+                    } message: {
+                        Text(errorMessage)
+                    }
             .padding()
         }
     }

@@ -18,7 +18,7 @@ struct TitleScreen: View{
             
             Button("Go to Login") {
                 NavigationHandler.animatePageChange {
-                    nav.currentPage = .login
+                    nav.currentPage = .login(email: "", password: "")
                 }
             }
             .padding()

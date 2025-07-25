@@ -25,7 +25,7 @@ struct Title_Screen: View {
             .onTapGesture {
                 navigateToLogin = true
                 NavigationHandler.animatePageChange {
-                    nav.currentPage = .login
+                    nav.currentPage = .login(email: "", password: "")
                 }
             }
         }

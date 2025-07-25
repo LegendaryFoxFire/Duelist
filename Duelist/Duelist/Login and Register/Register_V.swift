@@ -9,13 +9,21 @@ import SwiftUI
 
 struct Register: View {
     @EnvironmentObject var nav: NavigationHandler
+    @StateObject private var authManager = AuthManager()
     
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var reEnterPassword: String = ""
+    @State private var showError = false
+    @State private var errorMessage = ""
+    
+    init(email: String = "", password: String = "") {
+        _email = State(initialValue: email)
+        _password = State(initialValue: password)
+    }
 
     var body: some View {
-        BackButton(label:"Login", destination: .login) {
+        BackButton(label:"Login", destination: .login(email: email, password: password) ) {
             VStack(spacing: 30) {
                 D_Label(title: "Register")
                     .font(.largeTitle)
@@ -27,9 +35,16 @@ struct Register: View {
                 }
                 
                 D_Button(action: {
-                    // FIXME: implement Register database logic
-                    NavigationHandler.animatePageChange {
-                        nav.currentPage = .mainMenu
+                    Task {
+                        do {
+                            try await authManager.signUp(email: email, password: password)
+                            NavigationHandler.animatePageChange {
+                                nav.currentPage = .mainMenu
+                            }
+                        } catch {
+                            errorMessage = error.localizedDescription
+                            showError = true
+                        }
                     }
                 }) {
                     Text("Register")
@@ -39,6 +54,11 @@ struct Register: View {
                     .resizable()
                     .scaledToFit()
             }
+            .alert("Error", isPresented: $showError) {
+                        Button("OK") { }
+                    } message: {
+                        Text(errorMessage)
+                    }
             .padding()
             .navigationBarBackButtonHidden()
         }
@@ -46,5 +66,5 @@ struct Register: View {
 }
 
 #Preview {
-    Register()
+    Register(email: "test@example.com", password: "123456")
 }

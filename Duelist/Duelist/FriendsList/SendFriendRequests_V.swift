@@ -8,10 +8,21 @@
 import SwiftUI
 
 struct SendFriendRequests_V: View {
+    @EnvironmentObject var userManager: CurrentUserManager
+    @EnvironmentObject var globalUsersManager: GlobalUsersManager
+
     @State private var searchText: String = ""
-    @State private var sentRequests: [Friend] = []
-    
-    var potentialNewFriends: [Friend] = filterFriends(listToBeFiltered: filterFriends(listToBeFiltered: globalUsers, friendsToFilter: friendList), friendsToFilter: friendRequests)    //filter out current friends and current friend requests
+
+    //Im defining "potential friend" as someone who is not your current friend, has not already sent you a request, someone who you have not already sent a friend request to, and not yourself
+    var potentialNewFriends: [Friend] {
+        let currentFriends = userManager.currentUser.friendsList
+        let friendRequests = userManager.currentUser.friendRequests
+        let sentRequests = userManager.currentUser.sentFriendRequests
+        
+        let firstFilteredFriends = filterFriends(listToBeFiltered: globalUsersManager.globalUserList, friendsToFilter: currentFriends)
+        let secondFilteredFriends = filterFriends(listToBeFiltered: firstFilteredFriends, friendsToFilter: friendRequests)
+        return filterFriends(listToBeFiltered: secondFilteredFriends, friendsToFilter: sentRequests)
+    }
     var filteredPotentialNewFriends: [Friend] {
         if searchText.isEmpty {
             return potentialNewFriends
@@ -30,18 +41,17 @@ struct SendFriendRequests_V: View {
                     
                     ForEach(filteredPotentialNewFriends, id: \.id) { friend in
                         HStack {
-                            ProfilePhotoTemplate(size: .small, image: friend.image)
-                            Text(friend.friendsUserID)
-                            Spacer()
-                            Button(sentRequests.contains(where: { $0.id == friend.id }) ? "Requested" : "Add") {
-                                //FIXME: Going to have to do database stuff when a friend request is sent
-                                sentRequests.append(friend)
-                                
-                                print("Sent friend request to \(friend.friendsUserID)")
+                            if friend.id != userManager.currentUser.id {
+                                ProfilePhotoTemplate(size: .small, image: friend.image)
+                                Text(friend.friendsUserID)
+                                Spacer()
+                                Button("Add") {
+                                    //FIXME: Going to have to do database stuff when a friend request is sent
+                                    userManager.currentUser.sentFriendRequests.append(friend)
+                                }
+                                .buttonStyle(BorderlessButtonStyle())
+                                .padding()
                             }
-                            .disabled(sentRequests.contains(where: { $0.id == friend.id }))
-                            .buttonStyle(BorderlessButtonStyle())
-                            .padding()
                         }
                     }
                 }

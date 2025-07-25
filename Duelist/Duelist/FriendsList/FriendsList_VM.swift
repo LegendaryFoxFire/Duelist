@@ -10,31 +10,14 @@
 import Foundation
 
 struct Friend: Identifiable, Hashable { //Hashable so we can make it into a set
-    var id: UUID
+    var id = UUID()
     var image: String
     var friendsUserID: String
     var numberOfWins: Int
-    var rank: Int
+    var friendsList: [Friend]
+    var friendRequests: [Friend]
+    var sentFriendRequests: [Friend] = []    //New accounts never have sent friend requests
 }
-var user00 = Friend(id: UUID(), image: "profile_photo_0", friendsUserID: "Esteban0_0", numberOfWins: 12, rank: 9)
-var user01 = Friend(id: UUID(), image: "profile_photo_1", friendsUserID: "Jims43", numberOfWins: 45, rank: 2)
-var user02 = Friend(id: UUID(), image: "profile_photo_2", friendsUserID: "Nate", numberOfWins: 4, rank: 10)
-var user03 = Friend(id: UUID(), image: "profile_photo_3", friendsUserID: "MScott43", numberOfWins: 16, rank: 7)
-var user04 = Friend(id: UUID(), image: "profile_photo_4", friendsUserID: "Nathaniel2343", numberOfWins: 43, rank: 3)
-var user05 = Friend(id: UUID(), image: "profile_photo_5", friendsUserID: "Mathmagicianl2343", numberOfWins: 30, rank: 4)
-var user06 = Friend(id: UUID(), image: "profile_photo_6", friendsUserID: "HingleMcringleberry", numberOfWins: 18, rank: 6)
-var user07 = Friend(id: UUID(), image: "profile_photo_7", friendsUserID: "James34", numberOfWins: 50, rank: 1)
-var user08 = Friend(id: UUID(), image: "profile_photo_8", friendsUserID: "Nate", numberOfWins: 0, rank: 11)
-var user09 = Friend(id: UUID(), image: "profile_photo_9", friendsUserID: "JonBonesJones420", numberOfWins: 20, rank: 5)
-var user10 = Friend(id: UUID(), image: "profile_photo_10", friendsUserID: "McNugget32", numberOfWins: 16, rank: 7)
-
-
-
-var friendList = [user00] //user01, user02, user03, user04]
-
-var friendRequests = [user05, user06, user07, user08, user09, user10]
-
-let globalUsers = [user00, user01, user02, user03, user04, user05, user06, user07, user08, user09, user10]
 
 func filterFriends(listToBeFiltered: [Friend], friendsToFilter: [Friend]) -> [Friend]{
     let listToBeFilteredSet: Set<Friend> = Set(listToBeFiltered)

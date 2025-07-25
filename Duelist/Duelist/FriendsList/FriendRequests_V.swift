@@ -12,30 +12,26 @@ import SwiftUI
 
 struct FriendRequests_V: View {
     @EnvironmentObject var nav: NavigationHandler
-    @State private var friendRequestLocal = friendRequests
-    
-
+    @EnvironmentObject var userManager: CurrentUserManager
     
     var body: some View {
         BackButton(label:"Friends List", destination: .friendsList) {
             VStack{
                 List {
                     Section(header: Text("Friend Requests")){
-                        ForEach(friendRequestLocal, id: \.id) { friend in
+                        ForEach(userManager.currentUser.friendRequests, id: \.id) { friend in
                             FriendRequestListRow(friend: friend,
-                                             onAccept: {
-                                                 if let index = friendRequestLocal.firstIndex(where: { $0.id == friend.id }) {
-                                                     let acceptedFriend = friendRequestLocal.remove(at: index)
-                                                     friendList.append(acceptedFriend)
-                                                     friendRequests.remove(at: index)
-                                                 }
-                                             },
-                                             onReject: {
-                                                 if let index = friendRequestLocal.firstIndex(where: { $0.id == friend.id }) {
-                                                     friendRequestLocal.remove(at: index)
-                                                     friendRequests.remove(at: index)
-                                                 }
-                                             })
+                                onAccept: {
+                                     if let index = userManager.currentUser.friendRequests.firstIndex(where: { $0.id == friend.id }) {
+                                         let acceptedFriend = userManager.currentUser.friendRequests.remove(at: index)
+                                         userManager.currentUser.friendsList.append(acceptedFriend)
+                                     }
+                                 },
+                                 onReject: {
+                                     if let index = userManager.currentUser.friendRequests.firstIndex(where: { $0.id == friend.id }) {
+                                         userManager.currentUser.friendRequests.remove(at: index)
+                                     }
+                                 })
                         }
                     }
                     

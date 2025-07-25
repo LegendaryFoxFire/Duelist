@@ -15,6 +15,8 @@ struct DuelistApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(navHandler)
+                .environmentObject(CurrentUserManager.shared)
+                .environmentObject(GlobalUsersManager.shared)
         }
     }
 }

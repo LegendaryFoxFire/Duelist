@@ -9,7 +9,12 @@ import SwiftUI
 
 struct OtherProfile_V: View {
     @EnvironmentObject var nav: NavigationHandler
-    var friend: Friend  //FIXME: Need to load user from database
+    @EnvironmentObject var globalUsersManager: GlobalUsersManager
+    
+    var rank: Int {
+        return globalUsersManager.globalUserList.firstIndex(where: { $0.id == friend.id })! + 1
+    }
+    var friend: Friend
     var body: some View {
         BackButton(label:"Friends List", destination: .friendsList) {
             VStack(spacing: Globals.StandardHSpacing){
@@ -40,7 +45,7 @@ struct OtherProfile_V: View {
                         D_Label(title: "Rank: ")
                             .font(.title)
                             .bold(true)
-                        D_Label(title: String(friend.rank))
+                        D_Label(title: String(rank))
                             .font(.title)
                     }
                     GridRow {
@@ -65,5 +70,5 @@ struct OtherProfile_V: View {
 }
 
 #Preview {
-    OtherProfile_V(friend: Friend(id: UUID(), image: "profile_photo_4", friendsUserID: "BillyJoseph456", numberOfWins: 10, rank: 129))
+    OtherProfile_V(friend: Friend(id: UUID(), image: "profile_photo_4", friendsUserID: "BillyJoseph456", numberOfWins: 10, friendsList: [], friendRequests: []))
 }

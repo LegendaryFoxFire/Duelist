@@ -31,7 +31,8 @@ struct FriendRequestListRow: View {
         image: "profile_photo_10",
         friendsUserID: "Jimbo34",
         numberOfWins: 10,
-        rank: 200),
+        friendsList: [],
+        friendRequests: []),
         onAccept: {
         print("friend accepted")
     }, onReject: {

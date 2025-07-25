@@ -9,13 +9,14 @@ import SwiftUI
 
 struct Leaderboard_V: View {
     @EnvironmentObject var nav: NavigationHandler
+    @EnvironmentObject var globalUsersManager: GlobalUsersManager
+
     @State private var searchText: String = ""
-    let leaderboard: [Friend] = globalUsers.sorted { $0.numberOfWins > $1.numberOfWins }
-    var filteredLeaderboard: [Friend]{
+    var filteredLeaderboard: [Friend] {
         if searchText.isEmpty {
-            return leaderboard
+            return globalUsersManager.globalUserList
         } else {
-            return leaderboard.filter {
+            return globalUsersManager.globalUserList.filter {
                 $0.friendsUserID.lowercased().contains(searchText.lowercased())
             }
         }
@@ -35,7 +36,6 @@ struct Leaderboard_V: View {
                     }
                     ForEach(filteredLeaderboard) { friend in
                         Button {
-                            print("Friend Selected: \(friend.friendsUserID)")
                             NavigationHandler.animatePageChange {
                                 nav.currentPage = .leaderboardProfile(friend: friend)
                             }

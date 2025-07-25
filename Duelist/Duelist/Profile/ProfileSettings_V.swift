@@ -10,9 +10,11 @@ import PhotosUI
 
 struct ProfileSettings_V: View {
     @EnvironmentObject var nav: NavigationHandler
+    @EnvironmentObject var userManager: CurrentUserManager
+    
     @State private var showAlert = false
     @State private var newUsername: String = ""
-    @State var friend: Friend  //FIXME: Needs to be some kind of global variable so changes here persist throughout the app
+
     @State private var newProfilePhoto: String = ""
     var profilePhotos: [String] = [  //FIXME: Probably need some dynamic list of possible profile photos
         "profile_photo_0",
@@ -30,18 +32,17 @@ struct ProfileSettings_V: View {
     
     var body: some View {
         
-        BackButton(label:"Profile", destination: .profile(friend: friend)) {
+        BackButton(label:"Profile", destination: .profile) {
             VStack(spacing: 100){
                 VStack{
                     Text("Profile Settings")
                         .font(.largeTitle)
                         .bold(true)
-                    ProfilePhotoTemplate(size: .medium, image: friend.image)
+                    ProfilePhotoTemplate(size: .medium, image: userManager.currentUser.image)
                     Menu {
                         ForEach(profilePhotos, id: \.self) { photo in
                             Button(action: {
-                                newProfilePhoto = photo
-                                friend.image = photo
+                                userManager.currentUser.image = photo
                             }) {
                                 Image(photo)
                                     .resizable()
@@ -55,14 +56,9 @@ struct ProfileSettings_V: View {
                         Label("Edit Profile Photo", systemImage: "photo")
                             .font(.headline)
                     }
-//                    D_Button(action: {
-//                        print("Logic to Change Profile Photo")
-//                    }){
-//                        Text("Edit Profile Photo")
-//                    }
                 }
                 VStack {
-                    D_Label(title: friend.friendsUserID)
+                    D_Label(title: userManager.currentUser.friendsUserID)
                         .font(.title)
                         .bold(true)
                     D_Button(action: {
@@ -75,7 +71,7 @@ struct ProfileSettings_V: View {
                         Button("Cancel", role: .cancel) {showAlert = false}
                         Button("OK"){
                             if newUsername != ""{
-                                friend.friendsUserID = newUsername
+                                userManager.currentUser.friendsUserID = newUsername
                             }
                             showAlert = false
                         }
@@ -111,5 +107,5 @@ struct ProfileSettings_V: View {
     
 
 #Preview {
-    ProfileSettings_V(friend: user09)
+    ProfileSettings_V()
 }

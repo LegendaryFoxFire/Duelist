@@ -9,7 +9,12 @@ import SwiftUI
 
 struct Profile_V: View {
     @EnvironmentObject var nav: NavigationHandler
-    var friend: Friend  //FIXME: Need to load user from database
+    @EnvironmentObject var userManager: CurrentUserManager
+    @EnvironmentObject var globalUsersManager: GlobalUsersManager
+    
+    var rank: Int {
+        return globalUsersManager.globalUserList.firstIndex(where: { $0.id == userManager.currentUser.id })! + 1
+    }
     var body: some View {
         BackButton(label:"Main Menu", destination: .mainMenu) {
             VStack(spacing: Globals.StandardHSpacing){
@@ -17,7 +22,8 @@ struct Profile_V: View {
                     Text("Profile")
                         .font(.largeTitle)
                         .bold(true)
-                    ProfilePhotoTemplate(size: .large, image: friend.image)
+
+                    ProfilePhotoTemplate(size: .large, image: userManager.currentUser.image)
                 }
                 
                 VStack{
@@ -26,28 +32,28 @@ struct Profile_V: View {
                             D_Label(title: "Username: ")
                                 .font(.title)
                                 .bold()
-                            D_Label(title: friend.friendsUserID)
+                            D_Label(title: userManager.currentUser.friendsUserID)
                                 .font(.title)
                         }
                         GridRow {
                             D_Label(title: "Total Wins: ")
                                 .font(.title)
                                 .bold()
-                            D_Label(title: String(friend.numberOfWins))
+                            D_Label(title: String(userManager.currentUser.numberOfWins))
                                 .font(.title)
                         }
                         GridRow {
                             D_Label(title: "Rank: ")
                                 .font(.title)
                                 .bold(true)
-                            D_Label(title: String(friend.rank))
+                            D_Label(title: String(rank))
                                 .font(.title)
                         }
                         GridRow {
                             D_Label(title: "User ID: ")
                                 .font(.title)
                                 .bold(true)
-                            D_Label(title: friend.id.uuidString)
+                            D_Label(title: userManager.currentUser.id.uuidString)
                                 .font(.caption)
                         }
                     }
@@ -61,7 +67,7 @@ struct Profile_V: View {
                     .padding(.horizontal)
                     
                     Button("Settings") {
-                        nav.currentPage = .settings(friend: friend)
+                        nav.currentPage = .settings
                     }
                 }
             }
@@ -70,5 +76,5 @@ struct Profile_V: View {
 }
 
 #Preview {
-    Profile_V(friend: user04)
+    Profile_V()
 }

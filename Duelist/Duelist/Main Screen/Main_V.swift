@@ -39,7 +39,7 @@ struct Main_V: View {
             D_Button(action: {
                 // FIXME: implement login database logic
                 NavigationHandler.animatePageChange {
-                    nav.currentPage = .profile(friend: currentLoggedInUser)
+                    nav.currentPage = .profile
                 }
             }) {
                 Text("Profile")

@@ -12,13 +12,15 @@ import SwiftUI
 
 struct FriendsList_V: View {
     @EnvironmentObject var nav: NavigationHandler
+    @EnvironmentObject var userManager: CurrentUserManager
+
     @State private var searchText: String = ""
 
     var filteredFriends: [Friend] {
         if searchText.isEmpty {
-            return friendList
+            return userManager.currentUser.friendsList
         } else {
-            return friendList.filter {
+            return userManager.currentUser.friendsList.filter {
                 $0.friendsUserID.lowercased().contains(searchText.lowercased())
             }
         }

@@ -20,8 +20,8 @@ enum NavigationPage {
     case mainMenu
 
     // MARK: - User Settings
-    case settings(friend:Friend)
-    case profile(friend: Friend)
+    case settings
+    case profile
     case otherProfile(friend: Friend)
     case leaderboardProfile(friend: Friend)
 
@@ -54,10 +54,10 @@ enum NavigationPage {
             Leaderboard_V()
         case .leaderboardProfile(friend: let friend):
             LeaderboardProfile(friend: friend)
-        case .settings(let friend):
-            ProfileSettings_V(friend: friend)
-        case .profile(let friend):
-            Profile_V(friend: friend)
+        case .settings:
+            ProfileSettings_V()
+        case .profile:
+            Profile_V()
         case .otherProfile(let friend):
             OtherProfile_V(friend: friend)
         case .gameScreen:

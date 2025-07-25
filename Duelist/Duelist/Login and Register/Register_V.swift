@@ -23,7 +23,7 @@ struct Register: View {
     }
 
     var body: some View {
-        BackButton(label:"Login", destination: .login(email: email, password: password) ) {
+        BackButton(label:"Login", destination: .login(email: email, password: password)) {
             VStack(spacing: 30) {
                 D_Label(title: "Register")
                     .font(.largeTitle)
@@ -60,7 +60,6 @@ struct Register: View {
                         Text(errorMessage)
                     }
             .padding()
-            .navigationBarBackButtonHidden()
         }
     }
 }

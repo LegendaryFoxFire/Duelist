@@ -25,17 +25,17 @@ final class GlobalUsersManager: ObservableObject {
 
 
 //until the database gets up and running "Friend()" is in FriendList_VM
-var user00 = Friend(image: "profile_photo_0", friendsUserID: "Esteban0_0", numberOfWins: 12, friendsList: list1, friendRequests: list2)
-var user01 = Friend(image: "profile_photo_1", friendsUserID: "Jims43", numberOfWins: 45, friendsList: [], friendRequests: [])
-var user02 = Friend(image: "profile_photo_2", friendsUserID: "NateDaGr8", numberOfWins: 4, friendsList: [], friendRequests: [])
-var user03 = Friend(image: "profile_photo_3", friendsUserID: "MScott43", numberOfWins: 16, friendsList: [], friendRequests: [])
-var user04 = Friend(image: "profile_photo_4", friendsUserID: "Nathaniel2343", numberOfWins: 43,  friendsList: [], friendRequests: [])
-var user05 = Friend(image: "profile_photo_5", friendsUserID: "Mathmagicianl2343", numberOfWins: 30,  friendsList: [], friendRequests: [])
-var user06 = Friend(image: "profile_photo_6", friendsUserID: "HingleMcringleberry", numberOfWins: 18,  friendsList: [], friendRequests: [])
-var user07 = Friend(image: "profile_photo_7", friendsUserID: "James34", numberOfWins: 50, friendsList: [], friendRequests: [])
-var user08 = Friend(image: "profile_photo_8", friendsUserID: "Wilbo23", numberOfWins: 0, friendsList: [], friendRequests: [])
-var user09 = Friend(image: "profile_photo_9", friendsUserID: "JonBonesJones420", numberOfWins: 20,  friendsList: [], friendRequests: [])
-var user10 = Friend(image: "profile_photo_10", friendsUserID: "McNugget32", numberOfWins: 16, friendsList: [], friendRequests: [])
+var user00 = Friend(image: "profile_photo_0", friendsUserID: "Esteban0_0", numberOfWins: 50, sword: "sword_0", friendsList: list1, friendRequests: list2)
+var user01 = Friend(image: "profile_photo_1", friendsUserID: "Jims43", numberOfWins: 45, sword: "sword_0", friendsList: [], friendRequests: [])
+var user02 = Friend(image: "profile_photo_2", friendsUserID: "NateDaGr8", numberOfWins: 4, sword: "sword_0", friendsList: [], friendRequests: [])
+var user03 = Friend(image: "profile_photo_3", friendsUserID: "MScott43", numberOfWins: 16, sword: "sword_0", friendsList: [], friendRequests: [])
+var user04 = Friend(image: "profile_photo_4", friendsUserID: "Nathaniel2343", numberOfWins: 43, sword: "sword_0",  friendsList: [], friendRequests: [])
+var user05 = Friend(image: "profile_photo_5", friendsUserID: "Mathmagicianl2343", numberOfWins: 30, sword: "sword_0",  friendsList: [], friendRequests: [])
+var user06 = Friend(image: "profile_photo_6", friendsUserID: "HingleMcringleberry", numberOfWins: 18, sword: "sword_0",  friendsList: [], friendRequests: [])
+var user07 = Friend(image: "profile_photo_7", friendsUserID: "James34", numberOfWins: 50, sword: "sword_0", friendsList: [], friendRequests: [])
+var user08 = Friend(image: "profile_photo_8", friendsUserID: "Wilbo23", numberOfWins: 0, sword: "sword_0", friendsList: [], friendRequests: [])
+var user09 = Friend(image: "profile_photo_9", friendsUserID: "JonBonesJones420", numberOfWins: 20, sword: "sword_0",  friendsList: [], friendRequests: [])
+var user10 = Friend(image: "profile_photo_10", friendsUserID: "McNugget32", numberOfWins: 16, sword: "sword_0", friendsList: [], friendRequests: [])
 
 
 

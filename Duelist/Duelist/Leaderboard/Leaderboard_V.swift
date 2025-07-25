@@ -31,8 +31,10 @@ struct Leaderboard_V: View {
                     HStack{
                         Text("User")
                             .padding(.leading, 50)
+                            .font(.headline)
                         Spacer()
                         Text("Number of Wins")
+                            .font(.headline)
                     }
                     ForEach(filteredLeaderboard) { friend in
                         Button {

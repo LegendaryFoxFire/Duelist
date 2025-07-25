@@ -70,5 +70,5 @@ struct OtherProfile_V: View {
 }
 
 #Preview {
-    OtherProfile_V(friend: Friend(id: UUID(), image: "profile_photo_4", friendsUserID: "BillyJoseph456", numberOfWins: 10, friendsList: [], friendRequests: []))
+    OtherProfile_V(friend: Friend(id: UUID(), image: "profile_photo_4", friendsUserID: "BillyJoseph456", numberOfWins: 10, sword: "sword_0", friendsList: [], friendRequests: []))
 }

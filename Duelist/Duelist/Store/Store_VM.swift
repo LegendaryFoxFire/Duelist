@@ -7,13 +7,17 @@
 
 import SwiftUI
 
-struct sword: Identifiable{
+struct Sword: Identifiable{
     var id = UUID()
     var name: String
-    var numWins: String
+    var numWins: Int
+
 }
 
-let sword0 = sword(name: "sword_0", numWins: "100")
-let sword1 = sword(name: "sword_1", numWins: "0")
+var sword0 = Sword(name: "sword_0", numWins: 0)
+var sword1 = Sword(name: "sword_1", numWins: 10)
+var sword2 = Sword(name: "sword_2", numWins: 50)
+var sword3 = Sword(name: "sword_3", numWins: 100)
+var sword4 = Sword(name: "sword_4", numWins: 500)
 
-let swordList = [sword0, sword1]
+var swordList = [sword0, sword1, sword2, sword3, sword4]

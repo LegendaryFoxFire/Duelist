@@ -14,6 +14,7 @@ struct Friend: Identifiable, Hashable { //Hashable so we can make it into a set
     var image: String
     var friendsUserID: String
     var numberOfWins: Int
+    var sword: String
     var friendsList: [Friend]
     var friendRequests: [Friend]
     var sentFriendRequests: [Friend] = []    //New accounts never have sent friend requests

@@ -31,6 +31,7 @@ struct FriendRequestListRow: View {
         image: "profile_photo_10",
         friendsUserID: "Jimbo34",
         numberOfWins: 10,
+        sword: "sword_0",
         friendsList: [],
         friendRequests: []),
         onAccept: {

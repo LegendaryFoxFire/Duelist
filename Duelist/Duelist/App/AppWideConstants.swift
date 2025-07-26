@@ -22,5 +22,6 @@ enum Globals {
     static let SmallTitleFontSize: CGFloat = 26;
     static let HeadingFontSize: CGFloat = 20;
     static let SmallHeadingFontSize: CGFloat = 16;
+    static let ProfileVSpacing: CGFloat = 50;
 }
 

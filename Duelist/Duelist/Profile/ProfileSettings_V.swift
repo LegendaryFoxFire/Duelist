@@ -93,7 +93,7 @@ struct ProfileSettings_V: View {
                         Text("Change Theme")
                     }
                     D_Button(action: {
-                        print("Turn of/off notifications")
+                        print("Turn on/off notifications")
                     }){
                         Text("Notifications")
                     }

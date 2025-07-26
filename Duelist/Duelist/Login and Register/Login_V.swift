@@ -24,49 +24,52 @@ struct Login: View {
         _password = State(initialValue: password)
     }
 
-var body: some View {
-        VStack(spacing: 30) {
-            D_Label(title: "Login", fontSize: Globals.LargeTitleFontSize)
-                .font(.largeTitle)
-            
-            VStack() {
-                D_TextField(text: $email, type: .normal, keyword: "Email")
-
-                D_TextField(text: $password, type: .secure, keyword: "Password")
-            }
-            
-            D_Button(action: {
-                Task {
-                    do {
-                        try await authManager.signIn(email: email, password: password)
-                        NavigationHandler.animatePageChange {
-                            nav.currentPage = .mainMenu
+    var body: some View {
+        D_Background {
+            VStack(spacing: 30) {
+                D_Label(title: "Login", fontSize: Globals.LargeTitleFontSize)
+                    .font(.largeTitle)
+                
+                VStack() {
+                    D_TextField(text: $email, type: .normal, keyword: "Email")
+                    
+                    D_TextField(text: $password, type: .secure, keyword: "Password")
+                }
+                
+                D_Button(action: {
+                    Task {
+                        do {
+                            try await authManager.signIn(email: email, password: password)
+                            NavigationHandler.animatePageChange {
+                                nav.currentPage = .mainMenu
+                            }
+                        } catch {
+                            errorMessage = error.localizedDescription
+                            showError = true
                         }
-                    } catch {
-                        errorMessage = error.localizedDescription
-                        showError = true
+                    }
+                }) {
+                    Text("Login")
+                }
+                Button("Register"){
+                    NavigationHandler.animatePageChange {
+                        nav.currentPage = .register(email: email, password: password)
                     }
                 }
-            }) {
-                Text("Login")
+                
+                Image("swords")
+                    .resizable()
+                    .scaledToFit()
             }
-            Button("Register"){
-                NavigationHandler.animatePageChange {
-                    nav.currentPage = .register(email: email, password: password)
-                }
-            }
-            
-            Image("swords")
-                .resizable()
-                .scaledToFit()
         }
         .alert("Error", isPresented: $showError) {
-                    Button("OK") { }
-                } message: {
-                    Text(errorMessage)
-                }
+            Button("OK") { }
+        } message: {
+            Text(errorMessage)
+        }
         .padding()
     }
+    
 }
 
 

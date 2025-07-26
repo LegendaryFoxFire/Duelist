@@ -17,13 +17,13 @@ struct Profile_V: View {
     }
     var body: some View {
         BackButton(label:"Main Menu", destination: .mainMenu) {
-            VStack(spacing: Globals.StandardHSpacing){
+            VStack(spacing: Globals.ProfileVSpacing){
                 VStack{
                     D_Label(title: "Profile", fontSize: Globals.LargeTitleFontSize)
 
                     ProfilePhotoTemplate(size: .large, image: userManager.currentUser.image)
                 }
-                
+
                 VStack{
                     Grid(alignment: .leading, horizontalSpacing: Globals.StandardHSpacing, verticalSpacing: Globals.StandardVSpacing) {
                         GridRow {
@@ -56,12 +56,14 @@ struct Profile_V: View {
                             .background(Color.black.opacity(0.15))
                     )
                     .padding(.horizontal)
+                    Spacer()
                     
                     Button("Settings") {
                         nav.currentPage = .settings
                     }
                 }
             }
+            .padding(.top, Globals.ProfileVSpacing)
         }
     }
 }

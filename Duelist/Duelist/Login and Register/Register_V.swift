@@ -23,42 +23,45 @@ struct Register: View {
     }
 
     var body: some View {
-        BackButton(label:"Login", destination: .login(email: email, password: password)) {
-            VStack(spacing: 30) {
-                D_Label(title: "Register", fontSize: Globals.LargeTitleFontSize)
-                    .font(.largeTitle)
-                
-                VStack(alignment: .leading) {
-                    D_TextField(text: $email, type: .normal, keyword: "Email")
-                    D_TextField(text: $password, type: .secure, keyword: "Password")
-                    D_TextField(text: $reEnterPassword, type: .secure, keyword: "Re-Enter Password")
-                }
-                
-                D_Button(action: {
-                    Task {
-                        do {
-                            try await authManager.signUp(email: email, password: password)
-                            NavigationHandler.animatePageChange {
-                                nav.currentPage = .mainMenu
+        D_Background {
+            BackButton(label:"Login", destination: .login(email: email, password: password)) {
+                VStack(spacing: 30) {
+                    D_Label(title: "Register", fontSize: Globals.LargeTitleFontSize)
+                        .font(.largeTitle)
+                    
+                    VStack(alignment: .leading) {
+                        D_TextField(text: $email, type: .normal, keyword: "Email")
+                        D_TextField(text: $password, type: .secure, keyword: "Password")
+                        D_TextField(text: $reEnterPassword, type: .secure, keyword: "Re-Enter Password")
+                    }
+                    
+                    D_Button(action: {
+                        Task {
+                            do {
+                                try await authManager.signUp(email: email, password: password)
+                                NavigationHandler.animatePageChange {
+                                    nav.currentPage = .mainMenu
+                                }
+                            } catch {
+                                errorMessage = error.localizedDescription
+                                showError = true
                             }
-                        } catch {
-                            errorMessage = error.localizedDescription
-                            showError = true
                         }
+                    }) {
+                        Text("Register")
                     }
-                }) {
-                    Text("Register")
+                    
+                    Image("transparentbgswords")
+                        .resizable()
+                        .scaledToFit()
                 }
-                
-                Image("swords")
-                    .resizable()
-                    .scaledToFit()
+                .alert("Error", isPresented: $showError) {
+                    Button("OK") { }
+                } message: {
+                    Text(errorMessage)
+                }
+                .padding()
             }
-            .alert("Error", isPresented: $showError) {
-                        Button("OK") { }
-                    } message: {
-                        Text(errorMessage)
-                    }
             .padding()
         }
     }

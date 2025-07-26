@@ -12,12 +12,20 @@ struct D_Background<Content: View>: View {
     let content: () -> Content
 
     var body: some View {
-        ZStack  {
-            Image("background_0")
-                .resizable()
-                .scaledToFit()
-            content()
+        GeometryReader { geo in
+            ZStack {
+                Image("background_0")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: geo.size.width, height: geo.size.height)
+                    .clipped()
+                    .ignoresSafeArea() // ensures it fills under notch/safe
+                content()
+                    .frame(width: geo.size.width, height: geo.size.height)
+            }
+
         }
+        .ignoresSafeArea()
     }
 }
 

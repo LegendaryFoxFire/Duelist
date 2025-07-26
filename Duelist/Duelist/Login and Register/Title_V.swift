@@ -16,29 +16,31 @@ struct Title_Screen: View {
 
     var body: some View {
         NavigationStack {
-            VStack {
-                Image("swords")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .offset(y: slamOffset)
-                    .scaleEffect(slamScale)
-                    .onAppear {
-                        withAnimation(.interpolatingSpring(stiffness: 300, damping: 20)) {
-                            slamOffset = 0
-                            slamScale = 1.0
+            D_Background {
+                VStack {
+                    Image("transparentbgswords")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .offset(y: slamOffset)
+                        .scaleEffect(slamScale)
+                        .onAppear {
+                            withAnimation(.interpolatingSpring(stiffness: 300, damping: 20)) {
+                                slamOffset = 0
+                                slamScale = 1.0
+                            }
                         }
+                    
+                    D_Label(title: "Duelist", fontSize: Globals.LargeTitleFontSize)
+                        .font(.system(size: 80))
+                        .bold(true)
+                    D_Label(title: "Tap Screen to Continue",fontSize: Globals.SmallHeadingFontSize)
+                        .font(.caption)
+                }
+                .onTapGesture {
+                    navigateToLogin = true
+                    NavigationHandler.animatePageChange {
+                        nav.currentPage = .login(email: "", password: "")
                     }
-                
-                D_Label(title: "Duelist", fontSize: Globals.LargeTitleFontSize)
-                    .font(.system(size: 80))
-                    .bold(true)
-                D_Label(title: "Tap Screen to Continue",fontSize: Globals.SmallHeadingFontSize)
-                    .font(.caption)
-            }
-            .onTapGesture {
-                navigateToLogin = true
-                NavigationHandler.animatePageChange {
-                    nav.currentPage = .login(email: "", password: "")
                 }
             }
         }

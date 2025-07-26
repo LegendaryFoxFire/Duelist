@@ -23,46 +23,50 @@ struct Leaderboard_V: View {
     }
     
     var body: some View {
-        BackButton(label:"Main Menu", destination: .mainMenu) {
-            VStack{
-                D_Label(title: "Leaderboard", fontSize: Globals.LargeTitleFontSize)
-                
-                D_List {
-                    VStack {
-                        D_TextField(text: $searchText, type: .search, keyword: "Leaderboard")
-                        HStack{
-                            D_Label(title: "User", fontSize: Globals.HeadingFontSize)
-                                .padding(.leading, 50)
-                                .font(.headline)
-                            Spacer()
-                            D_Label(title: "Number of Wins", fontSize: Globals.HeadingFontSize)
-                                .font(.headline)
-                        }
-                        ForEach(filteredLeaderboard) { friend in
-                            D_ListRow{
-                                Button {
-                                    NavigationHandler.animatePageChange {
-                                        nav.currentPage = .leaderboardProfile(friend: friend)
-                                    }
-                                    
-                                } label: {
-                                    HStack {
-                                        ProfilePhotoTemplate(size: .small, image: friend.image)
-                                        D_Label(title: friend.friendsUserID, fontSize: Globals.HeadingFontSize)
-                                            .foregroundColor(.black)
-                                        Spacer()
-                                        D_Label(title: String(friend.numberOfWins), fontSize: Globals.HeadingFontSize)
-                                            .foregroundColor(.black)
+        D_Background {
+            BackButton(label:"Main Menu", destination: .mainMenu) {
+                VStack{
+
+                    D_Label(title: "Leaderboard", fontSize: Globals.LargeTitleFontSize)
+                    
+                    D_List {
+                        VStack {
+                            D_TextField(text: $searchText, type: .search, keyword: "Leaderboard")
+                            HStack{
+                                D_Label(title: "User", fontSize: Globals.HeadingFontSize)
+                                    .padding(.leading, 50)
+                                    .font(.headline)
+                                Spacer()
+                                D_Label(title: "Number of Wins", fontSize: Globals.HeadingFontSize)
+                                    .font(.headline)
+                            }
+                            ForEach(filteredLeaderboard) { friend in
+                                D_ListRow{
+                                    Button {
+                                        NavigationHandler.animatePageChange {
+                                            nav.currentPage = .leaderboardProfile(friend: friend)
+                                        }
                                         
+                                    } label: {
+                                        HStack {
+                                            ProfilePhotoTemplate(size: .small, image: friend.image)
+                                            D_Label(title: friend.friendsUserID, fontSize: Globals.HeadingFontSize)
+                                                .foregroundColor(.black)
+                                            Spacer()
+                                            D_Label(title: String(friend.numberOfWins), fontSize: Globals.HeadingFontSize)
+                                                .foregroundColor(.black)
+                                            
+                                        }
+                                        .contentShape(Rectangle())
                                     }
-                                    .contentShape(Rectangle())
+                                    .buttonStyle(BorderlessButtonStyle())
                                 }
-                                .buttonStyle(BorderlessButtonStyle())
                             }
                         }
                     }
                 }
             }
+            .padding(.top, 50)
         }
     }
 }

@@ -37,6 +37,7 @@ struct D_ListRow<Content: View>: View {
             .font(.headline)
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
+            .scrollContentBackground(.hidden)
             .background(Color.gray.opacity(0.2))
             .cornerRadius(10)
             .listRowSeparator(.hidden)

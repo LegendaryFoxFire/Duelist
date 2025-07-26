@@ -17,7 +17,7 @@ struct OtherProfile_V: View {
     var friend: Friend
     var body: some View {
         BackButton(label:"Friends List", destination: .friendsList) {
-            VStack(spacing: Globals.StandardHSpacing){
+            VStack(spacing: Globals.ProfileVSpacing){
                 
                 VStack{
                     D_Label(title: "Friend's Profile", fontSize: Globals.LargeTitleFontSize)
@@ -54,8 +54,10 @@ struct OtherProfile_V: View {
                         .stroke(Color.black, lineWidth: 2)
                         .background(Color.black.opacity(0.15))
                 )
-                .padding()
+                .padding(.horizontal)
+                Spacer()
             }
+            .padding(.top, Globals.ProfileVSpacing)
         }
     }
 }

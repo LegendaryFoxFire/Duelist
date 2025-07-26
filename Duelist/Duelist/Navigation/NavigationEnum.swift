@@ -72,6 +72,8 @@ enum NavigationPage {
             FriendRequests_V()
         case .sendFriendRequests:
             SendFriendRequests_V()
+        case .gameScreen:
+            Gameplay_V()
         }
     }
 }

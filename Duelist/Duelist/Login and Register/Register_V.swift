@@ -25,7 +25,7 @@ struct Register: View {
     var body: some View {
         BackButton(label:"Login", destination: .login(email: email, password: password)) {
             VStack(spacing: 30) {
-                D_Label(title: "Register")
+                D_Label(title: "Register", fontSize: Globals.LargeTitleFontSize)
                     .font(.largeTitle)
                 
                 VStack(alignment: .leading) {

@@ -35,9 +35,8 @@ struct ProfileSettings_V: View {
         BackButton(label:"Profile", destination: .profile) {
             VStack(spacing: 100){
                 VStack{
-                    Text("Profile Settings")
-                        .font(.largeTitle)
-                        .bold(true)
+                    D_Label(title: "Settings", fontSize: Globals.LargeTitleFontSize)
+
                     ProfilePhotoTemplate(size: .medium, image: userManager.currentUser.image)
                     Menu {
                         ForEach(profilePhotos, id: \.self) { photo in
@@ -58,7 +57,7 @@ struct ProfileSettings_V: View {
                     }
                 }
                 VStack {
-                    D_Label(title: userManager.currentUser.friendsUserID)
+                    D_Label(title: userManager.currentUser.friendsUserID, fontSize: Globals.SmallTitleFontSize)
                         .font(.title)
                         .bold(true)
                     D_Button(action: {
@@ -78,7 +77,7 @@ struct ProfileSettings_V: View {
                     }
                 }
                 VStack {
-                    Text("System Settings")
+                    D_Label(title: "System Setting", fontSize: Globals.SmallTitleFontSize)
                         .font(.largeTitle)
                         .bold(true)
                     

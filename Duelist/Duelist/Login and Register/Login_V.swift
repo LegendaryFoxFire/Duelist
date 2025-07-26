@@ -26,7 +26,7 @@ struct Login: View {
 
 var body: some View {
         VStack(spacing: 30) {
-            D_Label(title: "Login")
+            D_Label(title: "Login", fontSize: Globals.LargeTitleFontSize)
                 .font(.largeTitle)
             
             VStack() {

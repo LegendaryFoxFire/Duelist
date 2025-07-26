@@ -17,11 +17,11 @@ struct SendFriendRequests_V: View {
     var potentialNewFriends: [Friend] {
         let currentFriends = userManager.currentUser.friendsList
         let friendRequests = userManager.currentUser.friendRequests
-        let sentRequests = userManager.currentUser.sentFriendRequests
+        var sentRequests = userManager.currentUser.sentFriendRequests
         
         let firstFilteredFriends = filterFriends(listToBeFiltered: globalUsersManager.globalUserList, friendsToFilter: currentFriends)
         let secondFilteredFriends = filterFriends(listToBeFiltered: firstFilteredFriends, friendsToFilter: friendRequests)
-        return filterFriends(listToBeFiltered: secondFilteredFriends, friendsToFilter: sentRequests)
+        return filterFriends(listToBeFiltered: secondFilteredFriends, friendsToFilter: sentRequests + [userManager.currentUser])
     }
     var filteredPotentialNewFriends: [Friend] {
         if searchText.isEmpty {
@@ -35,22 +35,27 @@ struct SendFriendRequests_V: View {
     
     var body: some View {
         BackButton(label:"Friends List", destination: .friendsList) {
-            List{
-                VStack{
-                    D_TextField(text: $searchText, type: .search, keyword: "Global Users")
-                    
-                    ForEach(filteredPotentialNewFriends, id: \.id) { friend in
-                        HStack {
-                            if friend.id != userManager.currentUser.id {
-                                ProfilePhotoTemplate(size: .small, image: friend.image)
-                                Text(friend.friendsUserID)
-                                Spacer()
-                                Button("Add") {
-                                    //FIXME: Going to have to do database stuff when a friend request is sent
-                                    userManager.currentUser.sentFriendRequests.append(friend)
+            VStack{
+                D_Label(title: "Add New Friends", fontSize: Globals.LargeTitleFontSize)
+
+                D_List{
+                    VStack{
+                        D_TextField(text: $searchText, type: .search, keyword: "Global Users")
+                        
+                        ForEach(filteredPotentialNewFriends, id: \.id) { friend in
+                            D_ListRow {
+                                HStack {
+                                    
+                                    ProfilePhotoTemplate(size: .small, image: friend.image)
+                                    D_Label(title: friend.friendsUserID, fontSize: Globals.HeadingFontSize)
+                                    Spacer()
+                                    Button("Add") {
+                                        //FIXME: Going to have to do database stuff when a friend request is sent
+                                        userManager.currentUser.sentFriendRequests.append(friend)
+                                    }
+                                    .buttonStyle(BorderlessButtonStyle())
+                                    .padding()
                                 }
-                                .buttonStyle(BorderlessButtonStyle())
-                                .padding()
                             }
                         }
                     }

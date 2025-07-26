@@ -21,38 +21,35 @@ struct Store_V: View {
     
     var body: some View {
         BackButton(label:"Main Menu", destination: .mainMenu) {
-            HStack {
-                List{
-                    HStack{
-                        Text("Swords")
-                            .font(.headline)
-                        Spacer()
-                        Text("Number of Wins to Unlock")
-                            .font(.headline)
-                    }
+            VStack {
+                D_Label(title: "Choose Your weapon", fontSize: Globals.LargeTitleFontSize)
+                D_List{
                     ForEach(swordList) { sword in
-                        Button{
-                            if sword.numWins <= userManager.currentUser.numberOfWins {
-                                userManager.currentUser.sword = sword.name
-                            }
-                        } label: {
-                            HStack{
-                                Image(sword.name)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 100, height: 100)
-                                Spacer()
-                                if sword.name == userManager.currentUser.sword {
-                                    Text("Equipped!")
-                                        .foregroundColor(.black)
-                                } else if sword.numWins > userManager.currentUser.numberOfWins {
-                                    Text("Unlocked at \(sword.numWins) Wins!")
-                                        .foregroundColor(.black)
-                                } else{
-                                    Text("Tap to Equip")
-                                        .foregroundColor(.black)
+                        D_ListRow {
+                            Button{
+                                if sword.numWins <= userManager.currentUser.numberOfWins {
+                                    userManager.currentUser.sword = sword.name
                                 }
-                                
+                            } label: {
+                                HStack{
+                                    Image(sword.name)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 100, height: 100)
+                                    Spacer()
+                                    if sword.name == userManager.currentUser.sword {
+                                        D_Label(title: "Equipped!", fontSize: Globals.HeadingFontSize)
+
+                                            .foregroundColor(.black)
+                                    } else if sword.numWins > userManager.currentUser.numberOfWins {
+                                        D_Label(title: "Unlocked at \(sword.numWins) Wins!", fontSize: Globals.HeadingFontSize)
+                                            .foregroundColor(.black)
+                                    } else{
+                                        D_Label(title: "Tap to Equip", fontSize: Globals.HeadingFontSize)
+                                            .foregroundColor(.black)
+                                    }
+                                    
+                                }
                             }
                         }
                     }

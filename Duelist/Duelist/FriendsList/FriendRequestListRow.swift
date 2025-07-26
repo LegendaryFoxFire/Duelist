@@ -15,7 +15,7 @@ struct FriendRequestListRow: View {
     var body: some View {
         HStack {
             ProfilePhotoTemplate(size: .small, image: friend.image)
-            Text(friend.friendsUserID)
+            D_Label(title: friend.friendsUserID, fontSize: Globals.SmallHeadingFontSize)
             Spacer()
             Button("Accept", action: onAccept)
                 .buttonStyle(BorderlessButtonStyle())

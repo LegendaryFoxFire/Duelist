@@ -18,5 +18,9 @@ enum Globals {
     static let StandardHeight: CGFloat = 40;
     static let StandardWidth: CGFloat = 80;
     static let LargeHSpacing: CGFloat = 150;
+    static let LargeTitleFontSize: CGFloat = 40;
+    static let SmallTitleFontSize: CGFloat = 26;
+    static let HeadingFontSize: CGFloat = 20;
+    static let SmallHeadingFontSize: CGFloat = 16;
 }
 

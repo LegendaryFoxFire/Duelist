@@ -20,40 +20,31 @@ struct LeaderboardProfile: View {
             VStack(spacing: Globals.StandardHSpacing){
                 
                 VStack{
-                    Text("Profile")
-                        .font(.largeTitle)
-                        .bold(true)
+                    D_Label(title: "Profile", fontSize: Globals.LargeTitleFontSize)
                     ProfilePhotoTemplate(size: .large, image: friend.image)
                 }
                 
                 Grid(alignment: .leading, horizontalSpacing: Globals.StandardHSpacing, verticalSpacing: Globals.StandardVSpacing) {
                     GridRow {
-                        D_Label(title: "Username: ")
+                        D_Label(title: "Username: ", fontSize: Globals.SmallTitleFontSize)
                             .font(.title)
                             .bold()
-                        D_Label(title: friend.friendsUserID)
+                        D_Label(title: friend.friendsUserID, fontSize: Globals.SmallTitleFontSize)
                             .font(.title)
                     }
                     GridRow {
-                        D_Label(title: "Total Wins: ")
+                        D_Label(title: "Total Wins: ", fontSize: Globals.SmallTitleFontSize)
                             .font(.title)
                             .bold()
-                        D_Label(title: String(friend.numberOfWins))
+                        D_Label(title: String(friend.numberOfWins), fontSize: Globals.SmallTitleFontSize)
                             .font(.title)
                     }
                     GridRow {
-                        D_Label(title: "Rank: ")
+                        D_Label(title: "Rank: ", fontSize: Globals.SmallTitleFontSize)
                             .font(.title)
                             .bold(true)
-                        D_Label(title: String(rank))
+                        D_Label(title: String(rank), fontSize: Globals.SmallTitleFontSize)
                             .font(.title)
-                    }
-                    GridRow {
-                        D_Label(title: "User ID: ")
-                            .font(.title)
-                            .bold(true)
-                        D_Label(title: friend.id.uuidString)
-                            .font(.caption)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .center)

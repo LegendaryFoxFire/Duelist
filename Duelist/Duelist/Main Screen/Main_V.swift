@@ -14,6 +14,7 @@ struct Main_V: View {
     
     var body: some View {
         VStack{
+            D_Label(title: "Main Menu", fontSize: Globals.LargeTitleFontSize)
             Image("swords")
                 .resizable()
                 .aspectRatio(contentMode: .fit)

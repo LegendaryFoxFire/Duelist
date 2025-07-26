@@ -26,27 +26,36 @@ struct FriendsList_V: View {
         }
     }
     
-    //FIXME: Can't decide if I like the search bar at the top like this, or connected to the list like in SendFriendRequests_V
     var body: some View {
         VStack{
-            D_TextField(text: $searchText, type: .search, keyword: "friends")
+            D_Label(title: "Friends", fontSize: Globals.LargeTitleFontSize)
+            
+            D_List {
+                VStack{
+                    D_TextField(text: $searchText, type: .search, keyword: "Friends")
+                    
+                    ForEach(filteredFriends, id: \.id) { friend in
+                        D_ListRow {
+                            Button {
+                                NavigationHandler.animatePageChange {
+                                    nav.currentPage = .otherProfile(friend: friend)
+                                }
+                            } label: {
+                                HStack {
+                                    ProfilePhotoTemplate(size: .small, image: friend.image)
+                                    D_Label(title: friend.friendsUserID, fontSize: Globals.HeadingFontSize)
+                                        .foregroundColor(.black)
 
-            List {
-                ForEach(filteredFriends) { friend in
-                    Button {
-                        print("Friend Selected: \(friend.friendsUserID)")
-                        NavigationHandler.animatePageChange {
-                            nav.currentPage = .otherProfile(friend: friend)
-                        }
-                    } label: {
-                        HStack {
-                            ProfilePhotoTemplate(size: .small, image: friend.image)
-                            Text(String(friend.friendsUserID))
-                            Spacer()
+                                    Spacer()
+                                    SwordPhotoTemplate(image: friend.sword)
+                                }
+                                .contentShape(Rectangle())
                             }
-                            .contentShape(Rectangle())
+                            .buttonStyle(BorderlessButtonStyle())
+                            .padding()
+
+                        }
                     }
-                    .buttonStyle(PlainButtonStyle())
                 }
             }
             

@@ -25,33 +25,41 @@ struct Leaderboard_V: View {
     var body: some View {
         BackButton(label:"Main Menu", destination: .mainMenu) {
             VStack{
-                D_TextField(text: $searchText, type: .search, keyword: "friends")
+                D_Label(title: "Leaderboard", fontSize: Globals.LargeTitleFontSize)
                 
-                List {
-                    HStack{
-                        Text("User")
-                            .padding(.leading, 50)
-                            .font(.headline)
-                        Spacer()
-                        Text("Number of Wins")
-                            .font(.headline)
-                    }
-                    ForEach(filteredLeaderboard) { friend in
-                        Button {
-                            NavigationHandler.animatePageChange {
-                                nav.currentPage = .leaderboardProfile(friend: friend)
-                            }
-                            
-                        } label: {
-                            HStack {
-                                ProfilePhotoTemplate(size: .small, image: friend.image)
-                                Text(String(friend.friendsUserID))
-                                Spacer()
-                                Text(String(friend.numberOfWins))
-                            }
-                            .contentShape(Rectangle())
+                D_List {
+                    VStack {
+                        D_TextField(text: $searchText, type: .search, keyword: "Leaderboard")
+                        HStack{
+                            D_Label(title: "User", fontSize: Globals.HeadingFontSize)
+                                .padding(.leading, 50)
+                                .font(.headline)
+                            Spacer()
+                            D_Label(title: "Number of Wins", fontSize: Globals.HeadingFontSize)
+                                .font(.headline)
                         }
-                        .buttonStyle(PlainButtonStyle())
+                        ForEach(filteredLeaderboard) { friend in
+                            D_ListRow{
+                                Button {
+                                    NavigationHandler.animatePageChange {
+                                        nav.currentPage = .leaderboardProfile(friend: friend)
+                                    }
+                                    
+                                } label: {
+                                    HStack {
+                                        ProfilePhotoTemplate(size: .small, image: friend.image)
+                                        D_Label(title: friend.friendsUserID, fontSize: Globals.HeadingFontSize)
+                                            .foregroundColor(.black)
+                                        Spacer()
+                                        D_Label(title: String(friend.numberOfWins), fontSize: Globals.HeadingFontSize)
+                                            .foregroundColor(.black)
+                                        
+                                    }
+                                    .contentShape(Rectangle())
+                                }
+                                .buttonStyle(BorderlessButtonStyle())
+                            }
+                        }
                     }
                 }
             }

@@ -35,8 +35,8 @@ class AuthManager: ObservableObject {
             print("Found existing user: \(user.username)")
             self.user = user
         } catch {
-            print("❌ User profile not found: \(error)")
-            print("🆕 Creating new user profile...")
+            print("User profile not found: \(error)")
+            print("Creating new user profile...")
             if let firebaseUser = self.firebaseUser {
                 self.createNewUserProfile(firebaseUser: firebaseUser)
             }
@@ -177,4 +177,18 @@ class AuthManager: ObservableObject {
         
         try await updateUser(updatedUser)
     }
+    
+    // Add this method to AuthManager
+    @MainActor
+    func toggleCustomProfileImage() async throws {
+        guard let currentUser = user else {
+            throw NSError(domain: "AuthManager", code: 401, userInfo: [NSLocalizedDescriptionKey: "No current user"])
+        }
+        
+        var updatedUser = currentUser
+        updatedUser.useCustomProfileImage.toggle()
+        
+        try await updateUser(updatedUser)
+    }
+    
 }

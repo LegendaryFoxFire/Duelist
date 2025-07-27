@@ -11,7 +11,10 @@ import SwiftUI
 struct ProfilePhotoHelper {
     static func getProfileImageView(for user: User, size: ProfilePhotoSize) -> some View {
         Group {
-            if let customImageURL = user.customProfileImageURL, !customImageURL.isEmpty {
+            // Check if user wants to use custom image AND has one
+            if user.useCustomProfileImage,
+               let customImageURL = user.customProfileImageURL,
+               !customImageURL.isEmpty {
                 // Show custom uploaded image
                 AsyncImage(url: URL(string: customImageURL)) { image in
                     image
@@ -41,7 +44,7 @@ struct ProfilePhotoHelper {
         case .medium:
             return 100
         case .large:
-            return 150 // You might want to adjust this based on your design
+            return 150
         }
     }
 }

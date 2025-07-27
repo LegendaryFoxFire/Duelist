@@ -125,6 +125,20 @@ struct ProfileSettings_V: View {
                             .font(.headline)
                     }
                     .disabled(isUpdating)
+                    
+                    // Add this toggle - only show if user has a custom image
+                    if currentUser.customProfileImageURL != nil && !currentUser.customProfileImageURL!.isEmpty {
+                        D_Button(action: {
+                            toggleCustomProfileImage()
+                        }) {
+                            HStack {
+                                Image(systemName: currentUser.useCustomProfileImage ? "person.crop.circle.fill" : "person.crop.circle")
+                                Text(currentUser.useCustomProfileImage ? "Using Custom Photo" : "Using Default Photo")
+                            }
+                        }
+                        .disabled(isUpdating)
+                        .padding(.top)
+                    }
                 }
                 
                 VStack {
@@ -369,6 +383,28 @@ struct ProfileSettings_V: View {
         }
     }
     
+    // Add this method to ProfileSettings_V
+    private func toggleCustomProfileImage() {
+        Task {
+            do {
+                await MainActor.run { isUpdating = true }
+                
+                try await authManager.toggleCustomProfileImage()
+                
+                await MainActor.run {
+                    isUpdating = false
+                }
+                
+            } catch {
+                await MainActor.run {
+                    errorMessage = "Failed to update profile photo setting: \(error.localizedDescription)"
+                    showError = true
+                    isUpdating = false
+                }
+            }
+        }
+    }
+    
     // Sign out function
     private func signOut() {
         do {
@@ -382,6 +418,8 @@ struct ProfileSettings_V: View {
         }
     }
 }
+
+
 
 #Preview {
     ProfileSettings_V()

@@ -29,6 +29,7 @@ struct D_TextField: View {
             .padding(Globals.SmallHPadding)
             .autocorrectionDisabled(true)
             .autocapitalization(.none)
+
             
         } else if type == .secure {
             SecureField(
@@ -41,20 +42,22 @@ struct D_TextField: View {
             
         } else if type == .search {
             TextField(
-                "",
-                text: $text,
-                prompt: Text("Search \(keyword)...")
-            )
-            .textFieldStyle(RoundedBorderTextFieldStyle())
-            .padding(.leading, 40)
-            .overlay(
-                HStack {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundColor(.gray)
-                        .padding(.leading)
-                    Spacer()
-                }
-            )
+                    "",
+                    text: $text,
+                    prompt: Text("Search \(keyword)...")
+                )
+                .textFieldStyle(PlainTextFieldStyle())
+                .padding(.leading, 40)
+                .padding(.vertical, 8)
+                .background(Color.clear)
+                .overlay(
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.gray)
+                            .padding(.leading)
+                        Spacer()
+                    }
+                )
         }
     }
 }

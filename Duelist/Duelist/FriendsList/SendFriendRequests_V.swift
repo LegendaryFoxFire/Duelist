@@ -69,7 +69,7 @@ struct SendFriendRequests_V: View {
                                         .foregroundColor(.secondary)
                                         .multilineTextAlignment(.center)
                                 }
-                                .padding()
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
                             } else {
                                 ForEach(filteredPotentialNewFriends, id: \.id) { user in
                                     D_ListRow {
@@ -100,8 +100,10 @@ struct SendFriendRequests_V: View {
                                             }
                                         }
                                     }
-                                }                            }
+                                }
+                            }
                         }
+                        .background(Color.clear)
                     }
                 }
             }
@@ -115,6 +117,7 @@ struct SendFriendRequests_V: View {
             Text(errorMessage)
         }
     }
+        
     
     private func loadAllUsers() async {
         isLoading = true

@@ -92,6 +92,7 @@ struct Leaderboard_V: View {
                                     }
                                 }
                             }
+                            .listRowBackground(Color.clear)
                         }
                         .background(Color.clear)
                     }

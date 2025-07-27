@@ -48,7 +48,7 @@ struct Leaderboard_V: View {
                                 HStack {
                                     D_Label(title: "Rank", fontSize: Globals.HeadingFontSize)
                                         .font(.headline)
-                                        .frame(width: 50)
+                                        .frame(width: 60)
                                     
                                     D_Label(title: "User", fontSize: Globals.HeadingFontSize)
                                         .padding(.leading, 10)
@@ -92,7 +92,9 @@ struct Leaderboard_V: View {
                                     }
                                 }
                             }
+                            .listRowBackground(Color.clear)
                         }
+                        .background(Color.clear)
                     }
                 }
             }

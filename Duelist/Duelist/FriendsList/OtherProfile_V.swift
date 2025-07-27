@@ -122,6 +122,7 @@ struct OtherProfile_V: View {
             numberOfWins: 10,
             sword: "Default",
             profilePicture: 4,
+            useCustomProfileImage: true,
             volumeOn: true,
             theme: "background_0",
             notificationsOn: true,

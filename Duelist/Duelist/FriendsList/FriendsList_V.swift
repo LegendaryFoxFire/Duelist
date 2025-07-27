@@ -27,55 +27,58 @@ struct FriendsList_V: View {
     }
     
     var body: some View {
-        VStack{
-            D_Label(title: "Friends", fontSize: Globals.LargeTitleFontSize)
-            
-            D_List {
-                VStack{
-                    D_TextField(text: $searchText, type: .search, keyword: "Friends")
-                    
-                    ForEach(filteredFriends, id: \.id) { friend in
-                        D_ListRow {
-                            Button {
-                                NavigationHandler.animatePageChange {
-                                    nav.currentPage = .otherProfile(friend: friend)
+        D_Background {
+        BackButton(label:"Main Menu", destination: .mainMenu)  {
+            VStack{
+                D_Label(title: "Friends", fontSize: Globals.LargeTitleFontSize)
+                
+                D_List {
+                    VStack{
+                        D_TextField(text: $searchText, type: .search, keyword: "Friends")
+                        
+                        ForEach(filteredFriends, id: \.id) { friend in
+                            D_ListRow {
+                                Button {
+                                    NavigationHandler.animatePageChange {
+                                        nav.currentPage = .otherProfile(friend: friend)
+                                    }
+                                } label: {
+                                    HStack {
+                                        ProfilePhotoTemplate(size: .small, image: friend.image)
+                                        D_Label(title: friend.friendsUserID, fontSize: Globals.HeadingFontSize)
+                                            .foregroundColor(.black)
+                                        
+                                        Spacer()
+                                        SwordPhotoTemplate(image: friend.sword)
+                                    }
+                                    .contentShape(Rectangle())
                                 }
-                            } label: {
-                                HStack {
-                                    ProfilePhotoTemplate(size: .small, image: friend.image)
-                                    D_Label(title: friend.friendsUserID, fontSize: Globals.HeadingFontSize)
-                                        .foregroundColor(.black)
-
-                                    Spacer()
-                                    SwordPhotoTemplate(image: friend.sword)
-                                }
-                                .contentShape(Rectangle())
+                                .buttonStyle(BorderlessButtonStyle())
+                                .padding()
+                                
                             }
-                            .buttonStyle(BorderlessButtonStyle())
-                            .padding()
-
                         }
                     }
                 }
-            }
-            
-            HStack(spacing: Globals.LargeHSpacing){
-                Button("View Friend Requests"){
-                    NavigationHandler.animatePageChange {
-                        nav.currentPage = .viewFriendRequests
-                    }
-                }
-                Button("Send Friend Requests"){
-                    NavigationHandler.animatePageChange {
-                        nav.currentPage = .sendFriendRequests
-                    }
-                }
                 
-            }
-            .padding(Globals.SmallHPadding)
-            Button("Main Menu"){
-                NavigationHandler.animatePageChange {
-                    nav.currentPage = .mainMenu
+                HStack(spacing: Globals.LargeHSpacing){
+                    Button("View Friend Requests"){
+                        NavigationHandler.animatePageChange {
+                            nav.currentPage = .viewFriendRequests
+                        }
+                    }
+                    Button("Send Friend Requests"){
+                        NavigationHandler.animatePageChange {
+                            nav.currentPage = .sendFriendRequests
+                        }
+                    }
+                    
+                }
+                .padding(Globals.SmallHPadding)
+//                Button("Main Menu"){
+//                    NavigationHandler.animatePageChange {
+//                        nav.currentPage = .mainMenu
+//                    }
                 }
             }
         }

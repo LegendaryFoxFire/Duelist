@@ -13,57 +13,59 @@ struct Main_V: View {
     @EnvironmentObject var nav: NavigationHandler
     
     var body: some View {
-        VStack{
-            D_Label(title: "Main Menu", fontSize: Globals.LargeTitleFontSize)
-            Image("transparentbgswords")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-            
-            D_Button(action: {
-                // FIXME: implement login database logic
-                NavigationHandler.animatePageChange {
-                    nav.currentPage = .dualScreen
+        D_Background {
+            VStack{
+                D_Label(title: "Main Menu", fontSize: Globals.LargeTitleFontSize)
+                Image("transparentbgswords")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                
+                D_Button(action: {
+                    // FIXME: implement login database logic
+                    NavigationHandler.animatePageChange {
+                        nav.currentPage = .dualScreen
+                    }
+                }) {
+                    Text("DUEL!")
                 }
-            }) {
-                Text("DUEL!")
-            }
-            
-            D_Button(action: {
-                // FIXME: implement login database logic
-                NavigationHandler.animatePageChange {
-                    nav.currentPage = .storePage
+                
+                D_Button(action: {
+                    // FIXME: implement login database logic
+                    NavigationHandler.animatePageChange {
+                        nav.currentPage = .storePage
+                    }
+                }) {
+                    Text("Customize")
                 }
-            }) {
-                Text("Customize")
-            }
-            
-            D_Button(action: {
-                // FIXME: implement login database logic
-                NavigationHandler.animatePageChange {
-                    nav.currentPage = .profile
+                
+                D_Button(action: {
+                    // FIXME: implement login database logic
+                    NavigationHandler.animatePageChange {
+                        nav.currentPage = .profile
+                    }
+                }) {
+                    Text("Profile")
                 }
-            }) {
-                Text("Profile")
-            }
-            
-            D_Button(action: {
-                // FIXME: implement login database logic
-                NavigationHandler.animatePageChange {
-                    nav.currentPage = .friendsList
+                
+                D_Button(action: {
+                    // FIXME: implement login database logic
+                    NavigationHandler.animatePageChange {
+                        nav.currentPage = .friendsList
+                    }
+                }) {
+                    Text("View Friends")
                 }
-            }) {
-                Text("View Friends")
-            }
-            
-            D_Button(action: {
-                // FIXME: implement login database logic
-                NavigationHandler.animatePageChange {
-                    nav.currentPage = .leaderboard
+                
+                D_Button(action: {
+                    // FIXME: implement login database logic
+                    NavigationHandler.animatePageChange {
+                        nav.currentPage = .leaderboard
+                    }
+                }) {
+                    Text("Leaderboard")
                 }
-            }) {
-                Text("Leaderboard")
+                
             }
-            
         }
     }
 }

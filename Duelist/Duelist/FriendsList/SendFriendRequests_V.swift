@@ -34,27 +34,27 @@ struct SendFriendRequests_V: View {
     }
     
     var body: some View {
-        BackButton(label:"Friends List", destination: .friendsList) {
-            VStack{
-                D_Label(title: "Add New Friends", fontSize: Globals.LargeTitleFontSize)
-
-                D_List{
-                    VStack{
+        D_Background {
+            BackButton(label:"Friends List", destination: .friendsList) {
+                VStack{
+                    D_Label(title: "Add New Friends", fontSize: Globals.LargeTitleFontSize)
+                    
+                    D_List{
                         D_TextField(text: $searchText, type: .search, keyword: "Global Users")
-                        
-                        ForEach(filteredPotentialNewFriends, id: \.id) { friend in
-                            D_ListRow {
-                                HStack {
-                                    
-                                    ProfilePhotoTemplate(size: .small, image: friend.image)
-                                    D_Label(title: friend.friendsUserID, fontSize: Globals.HeadingFontSize)
-                                    Spacer()
-                                    Button("Add") {
-                                        //FIXME: Going to have to do database stuff when a friend request is sent
-                                        userManager.currentUser.sentFriendRequests.append(friend)
+                        VStack {
+                            ForEach(filteredPotentialNewFriends, id: \.id) { friend in
+                                D_ListRow {
+                                    HStack {
+                                        ProfilePhotoTemplate(size: .small, image: friend.image)
+                                        D_Label(title: friend.friendsUserID, fontSize: Globals.HeadingFontSize)
+                                        Spacer()
+                                        Button("Add") {
+                                            //FIXME: Going to have to do database stuff when a friend request is sent
+                                            userManager.currentUser.sentFriendRequests.append(friend)
+                                        }
+                                        .buttonStyle(BorderlessButtonStyle())
+                                        .padding()
                                     }
-                                    .buttonStyle(BorderlessButtonStyle())
-                                    .padding()
                                 }
                             }
                         }

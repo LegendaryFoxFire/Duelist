@@ -78,6 +78,7 @@ struct Profile_V: View {
                 .overlay(
                     RoundedRectangle(cornerRadius: Globals.CornerRadius)
                         .stroke(Color.black, lineWidth: 2)
+                        .background(Color.black.opacity(0.15))
                 )
                 .padding(.horizontal)
                 

@@ -89,7 +89,7 @@ struct Store_V: View {
         
         for i in 0..<swordList.count {
             if swordList[i].numWins > currentUser.numberOfWins {
-                swordList[i].name = "\(swordList[i].name)_gs"
+                swordList[i].name = "\(swordList[i].name)_b"
             }
         }
     }

@@ -20,6 +20,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct DuelistApp: App {
     @StateObject var navHandler = NavigationHandler()
+    @StateObject private var authManager = AuthManager()
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
@@ -29,6 +30,8 @@ struct DuelistApp: App {
                 .environmentObject(navHandler)
                 .environmentObject(CurrentUserManager.shared)
                 .environmentObject(GlobalUsersManager.shared)
+                .environmentObject(FirebaseService.shared)
+                .environmentObject(authManager)
         }
     }
 }

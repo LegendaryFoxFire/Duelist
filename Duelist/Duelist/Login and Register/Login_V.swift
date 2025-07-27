@@ -9,7 +9,7 @@
     import SwiftUI
 
     struct Login: View {
-        @StateObject private var authManager = AuthManager()
+        @EnvironmentObject var authManager: AuthManager
         @EnvironmentObject var nav: NavigationHandler
         @EnvironmentObject var userManager: CurrentUserManager
         @EnvironmentObject var globalUsersManager: GlobalUsersManager

@@ -1,0 +1,2 @@
+fix leaderboard text in column titles
+fix leaderboard list bg issue

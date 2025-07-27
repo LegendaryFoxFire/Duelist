@@ -8,32 +8,24 @@
 import Foundation
 import FirebaseFirestore
 
-struct UserModel: Identifiable, Codable {
-    @DocumentID var id: String?
-    let username: String
-    let totalWins: Int
-    let pfpPath: String
-    let friendsList: [FriendModel]
-    let friendRequests: [FriendModel]
-    var uid: String { id ?? "" }
-}
-
-struct FriendModel: Identifiable, Codable {
-    @DocumentID var id: String?
-    let since: Date
-    let username: String
-    let pfpPath: String
-    var friendUid: String { id ?? "" }
-}
-
-struct LeaderboardEntry: Identifiable, Codable {
-    @DocumentID var id: String?
-    let totalWins: Int
-    let username: String
-    let pfpPath: String
-    let rank: Int
+// Represents both the user profile and their social graph.
+struct User: Identifiable, Codable, Hashable {
+    @DocumentID var id: String?                  // Firestore document ID (same as Firebase UID)
     
-    var uid: String { id ?? "" }
+    var userID: String                    // Firebase UID (for redundancy & lookups)
+    var username: String                            // Display name or username
+    var numberOfWins: Int                        // Total wins in the game
+    var sword: String                            // Currently equipped sword
+    var profilePicture: Int                      // Avatar index or asset ID
+    var customProfileImageURL: String?
+    
+    var volumeOn: Bool
+    var theme: String
+    var notificationsOn: Bool
+    
+    // Social graph (reference by UID)
+    var friendsListIDs: [String]
+    var friendRequestIDs: [String]
+    var sentFriendRequestIDs: [String]
 }
-
 

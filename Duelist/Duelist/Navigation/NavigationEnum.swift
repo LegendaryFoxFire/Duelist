@@ -7,7 +7,7 @@
 import SwiftUI
 
 /// Represents all possible navigation destinations in the Duelist app.
-enum NavigationPage {
+indirect enum NavigationPage {
     // MARK: - Authentication
     case title
     case login(email: String, password: String)
@@ -22,8 +22,7 @@ enum NavigationPage {
     // MARK: - User Settings
     case settings
     case profile
-    case otherProfile(friend: Friend)
-    case leaderboardProfile(friend: Friend)
+    case otherProfile(user: User, source: NavigationPage)
 
     // MARK: - Gameplay
     case gameScreen
@@ -32,7 +31,7 @@ enum NavigationPage {
 
     // MARK: - Social
     case friendsList
-    case viewFriendRequests
+    case friendRequests
     case sendFriendRequests
     
     @ViewBuilder
@@ -52,14 +51,12 @@ enum NavigationPage {
             Store_V()
         case .leaderboard:
             Leaderboard_V()
-        case .leaderboardProfile(friend: let friend):
-            LeaderboardProfile(friend: friend)
         case .settings:
             ProfileSettings_V()
         case .profile:
             Profile_V()
-        case .otherProfile(let friend):
-            OtherProfile_V(friend: friend)
+        case .otherProfile(let user, let source):
+            OtherProfile_V(user: user, sourceDestination: source)
         case .gameScreen:
             NavMissing()
         case .resultsScreen:
@@ -68,7 +65,7 @@ enum NavigationPage {
             DuelSummary_V()
         case .friendsList:
             FriendsList_V()
-        case .viewFriendRequests:
+        case .friendRequests:
             FriendRequests_V()
         case .sendFriendRequests:
             SendFriendRequests_V()

@@ -273,9 +273,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Duelist/Preview Content\"";
-				DEVELOPMENT_TEAM = 5567LZ865Q;
+				DEVELOPMENT_TEAM = VTX6KAJZWY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Value: This app needs access to your camera to take profile pictures.\nValue: This app needs access to your camera to take profile pictures.\nThis app needs access to your camera to take profile pictures.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app needs access to your photo library to select profile pictures.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -302,9 +304,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Duelist/Preview Content\"";
-				DEVELOPMENT_TEAM = 5567LZ865Q;
+				DEVELOPMENT_TEAM = VTX6KAJZWY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Value: This app needs access to your camera to take profile pictures.\nValue: This app needs access to your camera to take profile pictures.\nThis app needs access to your camera to take profile pictures.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app needs access to your photo library to select profile pictures.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct Register: View {
     @EnvironmentObject var nav: NavigationHandler
-    @StateObject private var authManager = AuthManager()
-    
+    @EnvironmentObject var authManager: AuthManager
+
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var reEnterPassword: String = ""
@@ -36,6 +36,11 @@ struct Register: View {
                     }
                     
                     D_Button(action: {
+                        guard password == reEnterPassword else {
+                            errorMessage = "Passwords don't match"
+                            showError = true
+                            return
+                        }
                         Task {
                             do {
                                 try await authManager.signUp(email: email, password: password)

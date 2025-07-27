@@ -19,9 +19,9 @@ struct D_List<Content: View>: View {
             content
         }
         .listStyle(.plain) // or whatever style you prefer
-        .listRowInsets(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-        //.scrollContentBackground(.hidden) // iOS 16+
-        .background(Color.black.opacity(0.25))
+        .listRowInsets(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 0))
+        .scrollContentBackground(.hidden) // iOS 16+
+        .background(Color.clear)
     }
 }
 
@@ -38,8 +38,9 @@ struct D_ListRow<Content: View>: View {
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
             .scrollContentBackground(.hidden)
-            .background(Color.gray.opacity(0.2))
+            .background(Color.clear)
             .cornerRadius(10)
             .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
     }
 }

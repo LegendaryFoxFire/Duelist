@@ -20,6 +20,7 @@ struct Store_V: View {
     ]
     
     var body: some View {
+        D_Background {
         BackButton(label:"Main Menu", destination: .mainMenu) {
             VStack {
                 D_Label(title: "Choose Your weapon", fontSize: Globals.LargeTitleFontSize)
@@ -39,7 +40,7 @@ struct Store_V: View {
                                     Spacer()
                                     if sword.name == userManager.currentUser.sword {
                                         D_Label(title: "Equipped!", fontSize: Globals.HeadingFontSize)
-
+                                        
                                             .foregroundColor(.black)
                                     } else if sword.numWins > userManager.currentUser.numberOfWins {
                                         D_Label(title: "Unlocked at \(sword.numWins) Wins!", fontSize: Globals.HeadingFontSize)
@@ -56,6 +57,7 @@ struct Store_V: View {
                 }
             }
         }
+    }
         .onAppear {
             updateSwordList()
         }

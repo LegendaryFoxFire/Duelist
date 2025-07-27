@@ -66,7 +66,7 @@ struct Leaderboard_V: View {
                     }
                 }
             }
-            .padding(.top, 50)
+        
         }
     }
 }

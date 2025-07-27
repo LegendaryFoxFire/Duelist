@@ -115,9 +115,9 @@ struct FriendListRow: View {
                 
                 Spacer()
                 
-                Image(systemName: "chevron.right")
+                SwordPhotoTemplate(image: String(friend.sword))
                     .foregroundColor(.secondary)
-                    .font(.caption)
+                    .font(.caption)                
             }
             .padding(.vertical, 4)
         }

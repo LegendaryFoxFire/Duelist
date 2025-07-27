@@ -109,14 +109,12 @@ struct Leaderboard_V: View {
     
     private func loadLeaderboard() async {
         isLoading = true
-        
         do {
             allUsers = try await authManager.loadAllUsers()
         } catch {
             errorMessage = "Failed to load leaderboard: \(error.localizedDescription)"
             showError = true
         }
-        
         isLoading = false
     }
     

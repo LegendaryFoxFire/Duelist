@@ -22,11 +22,6 @@ struct LeaderboardProfile: View {
                 VStack{
                     D_Label(title: "Profile", fontSize: Globals.LargeTitleFontSize)
                     ProfilePhotoTemplate(size: .large, image: friend.image)
-                    Image(friend.sword)
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                        .shadow(color: .yellow.opacity(0.9), radius: 10, x: 0, y: 5) // Shadow behind visible parts
-                        .offset(x: 75, y: -120)
                 }
                 
                 Grid(alignment: .leading, horizontalSpacing: Globals.StandardHSpacing, verticalSpacing: Globals.StandardVSpacing) {

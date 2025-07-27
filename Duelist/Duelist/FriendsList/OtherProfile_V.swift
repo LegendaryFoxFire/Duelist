@@ -25,8 +25,13 @@ struct OtherProfile_V: View {
                 VStack(spacing: Globals.ProfileVSpacing) {
                     
                     VStack {
-                        D_Label(title: "Friend's Profile", fontSize: Globals.LargeTitleFontSize)
+                        D_Label(title: "Profile", fontSize: Globals.LargeTitleFontSize)
                         ProfilePhotoHelper.getProfileImageView(for: user, size: .large)
+                        Image(String(user.sword))
+                            .resizable()
+                            .frame(width: 100, height: 100)
+                            .shadow(color: .yellow.opacity(0.9), radius: 10, x: 0, y: 5)
+                            .offset(x: 75, y: -120)
                     }
                     
                     if isLoading {

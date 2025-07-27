@@ -12,11 +12,11 @@ struct Store_V: View {
     @EnvironmentObject var userManager: CurrentUserManager
     
     @State private var swordList = [
-        Sword(name: "sword_0", numWins: 0),
-        Sword(name: "sword_1", numWins: 10),
-        Sword(name: "sword_2", numWins: 50),
-        Sword(name: "sword_3", numWins: 100),
-        Sword(name: "sword_4", numWins: 500)
+        Sword(name: "sword_0_tp", numWins: 0),
+        Sword(name: "sword_1_tp", numWins: 10),
+        Sword(name: "sword_2_tp", numWins: 50),
+        Sword(name: "sword_3_tp", numWins: 100),
+        Sword(name: "sword_4_tp", numWins: 500)
     ]
     
     var body: some View {
@@ -64,7 +64,7 @@ struct Store_V: View {
     func updateSwordList(){
         for i in 0..<swordList.count {
             if swordList[i].numWins > userManager.currentUser.numberOfWins {
-                swordList[i].name = "\(swordList[i].name)_gs"
+                swordList[i].name = "\(swordList[i].name)_b"
             }
         }
     }

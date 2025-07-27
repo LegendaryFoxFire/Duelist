@@ -17,7 +17,7 @@ struct Title_Screen: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Image("swords")
+                Image("transparentbgswords")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .offset(y: slamOffset)

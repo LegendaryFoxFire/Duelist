@@ -34,6 +34,7 @@ struct ProfilePhotoTemplate: View {
             Image(image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
+                .frame(width: 350, height: 350)
                 .clipShape(Circle())
         }
     }

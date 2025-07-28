@@ -17,7 +17,7 @@ struct LeaderboardProfile: View {
     var friend: Friend
     var body: some View {
         BackButton(label:"Leaderboard", destination: .leaderboard) {
-            VStack(spacing: Globals.ProfileVSpacing){
+            VStack{
                 
                 VStack{
                     D_Label(title: "Profile", fontSize: Globals.LargeTitleFontSize)
@@ -57,7 +57,6 @@ struct LeaderboardProfile: View {
                 .padding(.horizontal)
                 Spacer()
             }
-            .padding(.top, Globals.ProfileVSpacing)
         }
     }
 }

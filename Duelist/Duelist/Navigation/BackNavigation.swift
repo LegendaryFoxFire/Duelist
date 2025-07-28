@@ -26,6 +26,7 @@ struct BackButton<Content: View>: View {
 
             content()
         }
+        .padding(.top, 50)
     }
 }
 

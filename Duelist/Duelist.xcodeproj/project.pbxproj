@@ -288,8 +288,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Duelist/Preview Content\"";
+				DEVELOPMENT_TEAM = 5567LZ865Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Value: This app needs access to your camera to take profile pictures.\nValue: This app needs access to your camera to take profile pictures.\nThis app needs access to your camera to take profile pictures.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app needs access to your photo library to select profile pictures.";
 				INFOPLIST_FILE = Duelist/Info.plist;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses bluetooth to find and connect with players";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "This app also uses local network instead of bluetooth should it be necessary";
@@ -319,8 +322,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Duelist/Preview Content\"";
+				DEVELOPMENT_TEAM = VTX6KAJZWY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Value: This app needs access to your camera to take profile pictures.\nValue: This app needs access to your camera to take profile pictures.\nThis app needs access to your camera to take profile pictures.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app needs access to your photo library to select profile pictures.";
 				INFOPLIST_FILE = Duelist/Info.plist;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses bluetooth to find and connect with players";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "This app also uses local network instead of bluetooth should it be necessary";

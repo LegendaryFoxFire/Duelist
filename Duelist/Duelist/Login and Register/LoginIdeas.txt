@@ -1,7 +1,2 @@
-
-//              Subsequent Views pushed onto this nav stack would use
-//              the following code segment in their respective views:
-                
-//              NavigationLink(destination: ThingView(nav: nav)) {
-//                  Text("Go to Thing")
-//              }
+add more insightful alerts for same password etc
+add loading wheel if necessary

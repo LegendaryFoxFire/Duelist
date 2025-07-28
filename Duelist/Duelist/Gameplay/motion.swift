@@ -28,12 +28,20 @@ class motion: ObservableObject {
     //For better shake detection
     private var yawHistory: [Double] = []
     private let maxYawHistory = 15
+    
+    //For connection to Gameplay VM
+    weak var delegate: GameplayVM?
+    
+    
 
+
+    //Communication
     @Published var deviceMotionData = DeviceMotionData(yaw: 0, acceleration: 0, action: Action.idle)
     @Published var swordAngle: Angle = .zero
+    
 
     init() {
-        startDeviceMotionUpdates()
+            startDeviceMotionUpdates()
     }
     
     func degrees(radians:Double) -> Double {
@@ -95,10 +103,24 @@ class motion: ObservableObject {
         //print("xAccel: \(xAccel), yAccel: \(yAccel), zAccel: \(zAccel)")
         actualAction.append(currentAction)
         
-        if(actualAction.count == 10){
-            deviceMotionData.action = classifyAction(actualAction)
+        if(actualAction.count == 3){
+            let newAction = classifyAction(actualAction)
+            deviceMotionData.action = newAction
             actualAction.removeAll()
+
+                // Only send if the action is not idle
+            if newAction != previousAction {
+                print("Delagating properly? : \(String(describing: delegate))")
+                print("New Actino: \(newAction)")
+                previousAction = newAction
+                delegate?.handleLocalAction(newAction)
+            }
         }
+        
+//        if(actualAction.count == 10){
+//            deviceMotionData.action = classifyAction(actualAction)
+//            actualAction.removeAll()
+//        }
         
         //print("Action: \(currentAction), Jerk: \(jerk), Acceleration: \(accelerationMagnitude), Yaw: \(degrees(radians: yaw))")
         print("Action: \(currentAction)")
@@ -149,6 +171,4 @@ class motion: ObservableObject {
         }
         return changes >= 3
     }
-    
-
 }

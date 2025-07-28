@@ -13,7 +13,7 @@ struct DeviceMotionData {
     var action: Action
 }
 
-enum Action: String {
+enum Action: String, Codable {
     case attack = "Attack"
     case block = "Block"
     case idle = "Idle"

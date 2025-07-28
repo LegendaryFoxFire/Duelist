@@ -47,7 +47,7 @@ enum NavigationPage {
         case .mainMenu:
             Main_V()
         case .dualScreen:
-            NavMissing()
+            Loading_V()
         case .storePage:
             Store_V()
         case .leaderboard:
@@ -72,8 +72,6 @@ enum NavigationPage {
             FriendRequests_V()
         case .sendFriendRequests:
             SendFriendRequests_V()
-        case .gameScreen:
-            Gameplay_V()
         }
     }
 }

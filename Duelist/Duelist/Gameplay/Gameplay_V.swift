@@ -7,30 +7,20 @@
 
 import SwiftUI
 
-struct Gameplay_V: View {
-    @EnvironmentObject var nav: NavigationHandler
-
-    @StateObject private var viewModel = motion()
+struct GameplayView: View {
+    @ObservedObject var viewModel: GameplayVM
+    @StateObject var motion: motion
 
     var body: some View {
-        VStack(spacing: 20) {
-            Image("practice sword")
-                .resizable()
-                .frame(width: 500, height: 500)
-                .rotationEffect(viewModel.swordAngle)
-            Text("Currently: ")
-                .font(.headline)
-            HStack {
-                Text("Acceleration: \(String(format: "%.2f", viewModel.deviceMotionData.acceleration))")
-                Text("yaw: \(String(format: "%.2f", viewModel.deviceMotionData.yaw))")
-                Text("Action: \(String(viewModel.deviceMotionData.action.rawValue))")
-            }
+        VStack(spacing: 24) {
+            Text("You: \(viewModel.localHealth) HP")
+            Text("Opponent: \(viewModel.opponentHealth) HP")
+
+            Text("Opponent Action: \(viewModel.opponentAction.rawValue.capitalized)")
+            Text("My Action: \(viewModel.myAction)")
         }
         .padding()
     }
 }
 
 
-#Preview {
-    ContentView()
-}

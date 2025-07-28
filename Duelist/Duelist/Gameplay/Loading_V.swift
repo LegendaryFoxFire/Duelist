@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Loading_V: View {
     @StateObject private var viewModel = LoadingGame_VM()
-    @State private var showGame = false
+    @State private var showGame = true
     
     var gameplayContent: some View {
             let multiplayer = viewModel.multiplayer

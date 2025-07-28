@@ -21,7 +21,6 @@ struct DuelResults_V: View {
                     VStack(spacing: 20) {
                         ProfilePhotoHelper.getProfileImageView(for: loser, size: .large)
                             .scaleEffect(1.5)
-                        
                         Text(viewModel.currentUserWon ? "Opponent" : "You")
                             .font(.title)
                             .bold()
@@ -148,17 +147,17 @@ struct DuelResults_V: View {
 //                                .shadow(color: .blue.opacity(0.4), radius: 8, x: 0, y: 4)
 //                        }
                         
-                        Button(action: {
-                            nav.currentPage = .mainMenu
-                        }) {
-                            Text("Main Menu")
-                                .font(.headline)
-                                .foregroundColor(.primary)
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 12)
-                                .background(Color.gray.opacity(0.2))
-                                .cornerRadius(10)
-                        }
+//                        Button(action: {
+//                            nav.currentPage = .mainMenu
+//                        }) {
+//                            Text("Main Menu")
+//                                .font(.headline)
+//                                .foregroundColor(.primary)
+//                                .frame(maxWidth: .infinity)
+//                                .padding(.vertical, 12)
+//                                .background(Color.gray.opacity(0.2))
+//                                .cornerRadius(10)
+//                        }
                     }
                     .padding(.horizontal, 40)
                     .padding(.bottom, 50)

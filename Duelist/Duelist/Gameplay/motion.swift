@@ -94,7 +94,6 @@ class motion: ObservableObject {
             yawHistory.removeFirst()
         }
         
-        // Improved angle calculation
         let rawAngle = degrees(radians: yaw)
         let normalizedAngle = normalizeAngle(rawAngle)
         let smoothedAngle = smoothAngle(normalizedAngle)
@@ -102,8 +101,6 @@ class motion: ObservableObject {
         // Update sword angle with smoothed value
         swordAngle = Angle(degrees: smoothedAngle)
         delegate?.updateSwordAngle(smoothedAngle)
-
-        
         
         deviceMotionData.acceleration = accelerationMagnitude
         deviceMotionData.yaw = degrees(radians: yaw)
@@ -117,7 +114,6 @@ class motion: ObservableObject {
             deviceMotionData.action = newAction
             actualAction.removeAll()
 
-                // Only send if the action is not idle
             if newAction != previousAction {
                 print("Delagating properly? : \(String(describing: delegate))")
                 print("New Actino: \(newAction)")
@@ -148,19 +144,17 @@ class motion: ObservableObject {
         motionManager.stopDeviceMotionUpdates()
     }
     
-    // Smooth angle changes to prevent jittery rotation
     private func smoothAngle(_ newAngle: Double) -> Double {
         angleHistory.append(newAngle)
         if angleHistory.count > maxAngleHistory {
             angleHistory.removeFirst()
         }
         
-        // Return weighted average with more weight on recent values
         var weightedSum = 0.0
         var totalWeight = 0.0
         
         for (index, angle) in angleHistory.enumerated() {
-            let weight = Double(index + 1) // More recent angles get higher weight
+            let weight = Double(index + 1)
             weightedSum += angle * weight
             totalWeight += weight
         }
@@ -168,21 +162,17 @@ class motion: ObservableObject {
         return weightedSum / totalWeight
     }
     
-    // Normalize angle to prevent sudden jumps when crossing 0/360 boundary
     private func normalizeAngle(_ angle: Double) -> Double {
         var normalized = angle
         
-        // Set base angle on first reading for relative positioning
         if !hasSetBaseAngle {
             baseAngle = angle
             hasSetBaseAngle = true
             return 0 // Start at 0 degrees
         }
         
-        // Calculate relative angle from base
         normalized = angle - baseAngle
         
-        // Keep angle in reasonable range (-180 to 180)
         while normalized > 180 {
             normalized -= 360
         }

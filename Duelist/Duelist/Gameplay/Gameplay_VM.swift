@@ -87,12 +87,6 @@ class GameplayVM: ObservableObject {
             winner = "You"
         }
     }
-    
-    func setOpponentUser(_ user: User) {
-            DispatchQueue.main.async { [weak self] in
-                self?.opponent = user.userID
-            }
-    }
 }
 
 

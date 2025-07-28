@@ -15,7 +15,7 @@ class LoadingGame_VM: ObservableObject {
 
     init() {
         //let role = Multiplayer.assignRole(from: UIDevice.current.name)
-        let role = Multiplayer.MultipeerRole.advertiser
+        let role = Multiplayer.MultipeerRole.browser
         print("Device Name: \(UIDevice.current.name)")
         print("Role: \(role)")
 

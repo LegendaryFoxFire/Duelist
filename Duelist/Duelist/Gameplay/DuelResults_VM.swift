@@ -35,8 +35,9 @@ class DuelResults_VM: ObservableObject {
         
         Task {
             do {
+                print(winner.userID, "wins:", winner.numberOfWins)
                 try await FirebaseService.shared.updateUserWins(winner.userID, winner.numberOfWins + 1)
-                
+                print(winner.userID, "wins updated")
                 if currentUserWon {
                     await MainActor.run {
                         authManager.user?.numberOfWins += 1

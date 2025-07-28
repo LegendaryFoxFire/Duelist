@@ -61,7 +61,6 @@ struct GameplayView: View {
                                 .scaleEffect(viewModel.isBlocking ? 1.1 : 1.0)
                                 .animation(.easeInOut(duration: 0.3), value: viewModel.isBlocking)
                         } else {
-                            // Sword icon when attacking/idle
                             if let currentUser = authManager.user {
                                 Image(String(currentUser.sword))
                                     .resizable()

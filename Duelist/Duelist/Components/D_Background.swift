@@ -9,29 +9,36 @@ import SwiftUI
 
 struct D_Background<Content: View>: View {
     @EnvironmentObject var nav: NavigationHandler
+    @EnvironmentObject var authManager: AuthManager
     let content: () -> Content
 
     var body: some View {
         GeometryReader { geo in
             ZStack {
-                Image("background_0")
+                Image(getBackgroundImage())
                     .resizable()
                     .scaledToFill()
                     .frame(width: geo.size.width, height: geo.size.height)
                     .clipped()
-                    .ignoresSafeArea() // ensures it fills under notch/safe
+                    .ignoresSafeArea()
+                
                 content()
                     .frame(width: geo.size.width, height: geo.size.height)
             }
-
         }
         .ignoresSafeArea()
+    }
+    
+    private func getBackgroundImage() -> String {
+        guard let user = authManager.user else {
+            return ThemeConstants.getBackgroundImage(for: "Default")
+        }
+        return ThemeConstants.getBackgroundImage(for: user.theme)
     }
 }
 
 #Preview {
-    D_Background{
+    D_Background {
         PracticeView()
     }
-
 }

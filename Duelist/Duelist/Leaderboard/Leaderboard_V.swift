@@ -43,7 +43,8 @@ struct Leaderboard_V: View {
                     } else {
                         D_List {
                             VStack {
-                                D_TextField(text: $searchText, type: .search, keyword: "Search players")
+                                // "search suggestion is already there"
+                                D_TextField(text: $searchText, type: .search, keyword: "players")
                                 
                                 HStack {
                                     D_Label(title: "Rank", fontSize: Globals.HeadingFontSize)

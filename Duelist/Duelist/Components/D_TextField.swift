@@ -14,6 +14,7 @@ enum TextFieldType {
 }
 
 struct D_TextField: View {
+    @EnvironmentObject var authManager: AuthManager
     @Binding var text: String
     var type: TextFieldType
     var keyword: String
@@ -24,8 +25,10 @@ struct D_TextField: View {
                 "",
                 text: $text,
                 prompt: Text(keyword)
+                    .foregroundColor(ThemeColors.dynamicSecondary(authManager: authManager))
             )
             .textFieldStyle(RoundedBorderTextFieldStyle())
+            .foregroundColor(ThemeColors.dynamicTextFieldText(authManager: authManager))  // Black text in all modes
             .padding(Globals.SmallHPadding)
             .autocorrectionDisabled(true)
             .autocapitalization(.none)
@@ -35,8 +38,10 @@ struct D_TextField: View {
                 "",
                 text: $text,
                 prompt: Text(keyword)
+                    .foregroundColor(ThemeColors.dynamicSecondary(authManager: authManager))
             )
             .textFieldStyle(RoundedBorderTextFieldStyle())
+            .foregroundColor(ThemeColors.dynamicTextFieldText(authManager: authManager))  // Black text in all modes
             .padding(Globals.SmallHPadding)
             
         } else if type == .search {
@@ -44,13 +49,15 @@ struct D_TextField: View {
                 "",
                 text: $text,
                 prompt: Text("Search \(keyword)...")
+                    .foregroundColor(ThemeColors.dynamicSecondary(authManager: authManager))
             )
             .textFieldStyle(RoundedBorderTextFieldStyle())
+            .foregroundColor(ThemeColors.dynamicTextFieldText(authManager: authManager))  // Black text in all modes
             .padding(.leading, 40)
             .overlay(
                 HStack {
                     Image(systemName: "magnifyingglass")
-                        .foregroundColor(.gray)
+                        .foregroundColor(ThemeColors.dynamicSecondary(authManager: authManager))
                         .padding(.leading)
                     Spacer()
                 }

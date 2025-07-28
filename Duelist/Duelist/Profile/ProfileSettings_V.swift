@@ -27,7 +27,7 @@ struct ProfileSettings_V: View {
     @State private var newProfilePhoto: String = ""
     
     // Available themes
-    private let availableThemes = ["Default", "Dark", "Forest"] // "Light", "Ocean"
+    private let availableThemes = ThemeConstants.availableThemes
 
     var body: some View {
         D_Background {

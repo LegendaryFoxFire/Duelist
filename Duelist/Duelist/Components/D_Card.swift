@@ -7,6 +7,7 @@
 import SwiftUI
 
 struct D_Card<Content: View>: View {
+    @EnvironmentObject var authManager: AuthManager  // Add for theme awareness
     var width: CGFloat? = nil
     var height: CGFloat? = nil
     @ViewBuilder var content: () -> Content
@@ -14,7 +15,7 @@ struct D_Card<Content: View>: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: Globals.CornerRadius)
-                .fill(ThemeColors.secondary.opacity(0.5))
+                .fill(ThemeColors.dynamicSecondary(authManager: authManager).opacity(0.5))  // Dynamic theme-aware color
                 .shadow(radius: Globals.CornerRadius)
             VStack(alignment: .leading, spacing: Globals.SmallHPadding) {
                 content()

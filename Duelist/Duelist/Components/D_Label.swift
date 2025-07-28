@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct D_Label: View {
+    @EnvironmentObject var authManager: AuthManager  // Add for theme awareness
     var title: String
     var fontSize: CGFloat
 
     var body: some View {
         Text(title)
-            .foregroundStyle(.black)
+            .foregroundStyle(ThemeColors.dynamicPrimary(authManager: authManager))  // Dynamic theme-aware color instead of .black
             .font(.custom("Copperplate", size: fontSize))
-            .foregroundColor(.yellow)
+            .foregroundColor(ThemeColors.dynamicAccent(authManager: authManager))  // Dynamic theme-aware accent color instead of .yellow
             .shadow(radius: 3)
     }
 }

@@ -18,9 +18,33 @@
 		16959A952E26EAB900A8FA48 /* Duelist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Duelist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		96C3665F2E36F89B003F1C21 /* Exceptions for "Duelist" folder in "Duelist" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				App/ThemeColorsExtension.swift,
+			);
+			target = 16959A942E26EAB900A8FA48 /* Duelist */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		96C366602E36F89B003F1C21 /* Exceptions for "Duelist" folder in "Copy Bundle Resources" phase from "Duelist" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 16959A932E26EAB900A8FA48 /* Resources */;
+			membershipExceptions = (
+				App/ThemeColorsExtension.swift,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		16959A972E26EAB900A8FA48 /* Duelist */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				96C3665F2E36F89B003F1C21 /* Exceptions for "Duelist" folder in "Duelist" target */,
+				96C366602E36F89B003F1C21 /* Exceptions for "Duelist" folder in "Copy Bundle Resources" phase from "Duelist" target */,
+			);
 			path = Duelist;
 			sourceTree = "<group>";
 		};

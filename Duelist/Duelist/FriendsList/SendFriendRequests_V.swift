@@ -55,53 +55,59 @@ struct SendFriendRequests_V: View {
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                     } else {
                         D_List {
-                            D_TextField(text: $searchText, type: .search, keyword: "Search users")
-                            
-                            if filteredPotentialNewFriends.isEmpty {
-                                VStack {
-                                    Text(searchText.isEmpty ? "No users available" : "No users found")
-                                        .font(.title2)
-                                        .foregroundColor(.secondary)
-                                    Text(searchText.isEmpty ?
-                                         "All users are either your friends or have pending requests." :
-                                         "Try searching for a different username.")
+                            VStack{
+                                D_TextField(text: $searchText, type: .search, keyword: "Search users")
+                                
+                                if filteredPotentialNewFriends.isEmpty {
+                                    VStack {
+                                        Text(searchText.isEmpty ? "No users available" : "No users found")
+                                            .font(.title2)
+                                            .foregroundColor(.secondary)
+                                        Text(searchText.isEmpty ?
+                                             "All users are either your friends or have pending requests." :
+                                                "Try searching for a different username.")
                                         .font(.body)
                                         .foregroundColor(.secondary)
                                         .multilineTextAlignment(.center)
-                                }
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            } else {
-                                ForEach(filteredPotentialNewFriends, id: \.id) { user in
-                                    D_ListRow {
-                                        HStack {
-                                            Button(action: {
-                                                nav.currentPage = .otherProfile(user: user, source: .sendFriendRequests)
-                                            }) {
-                                                HStack {
-                                                    ProfilePhotoHelper.getProfileImageView(for: user, size: .small)
-                                                    D_Label(title: user.username, fontSize: Globals.HeadingFontSize)
-                                                }
-                                            }
-                                            .buttonStyle(.plain)
-                                            
-                                            Spacer()
-                                            
-                                            if sendingRequests.contains(user.userID) {
-                                                ProgressView()
-                                                    .scaleEffect(0.8)
-                                            } else {
-                                                Button("Add") {
-                                                    Task {
-                                                        await sendFriendRequest(to: user)
+                                    }
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                    .background(Color.clear)
+                                    
+                                } else {
+                                    ForEach(filteredPotentialNewFriends, id: \.id) { user in
+                                        D_ListRow {
+                                            HStack {
+                                                Button(action: {
+                                                    nav.currentPage = .otherProfile(user: user, source: .sendFriendRequests)
+                                                }) {
+                                                    HStack {
+                                                        ProfilePhotoHelper.getProfileImageView(for: user, size: .small)
+                                                        D_Label(title: user.username, fontSize: Globals.HeadingFontSize)
                                                     }
                                                 }
-                                                .buttonStyle(BorderlessButtonStyle())
-                                                .padding()
+                                                .buttonStyle(.plain)
+                                                
+                                                Spacer()
+                                                
+                                                if sendingRequests.contains(user.userID) {
+                                                    ProgressView()
+                                                        .scaleEffect(0.8)
+                                                } else {
+                                                    Button("Add") {
+                                                        Task {
+                                                            await sendFriendRequest(to: user)
+                                                        }
+                                                    }
+                                                    .buttonStyle(BorderlessButtonStyle())
+                                                    .padding()
+                                                }
                                             }
                                         }
                                     }
+                                    
                                 }
                             }
+                            .listRowBackground(Color.clear)
                         }
                         .background(Color.clear)
                     }

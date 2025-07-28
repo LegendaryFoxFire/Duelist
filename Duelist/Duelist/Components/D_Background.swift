@@ -14,7 +14,7 @@ struct D_Background<Content: View>: View {
     var body: some View {
         GeometryReader { geo in
             ZStack {
-                Image("background_0")
+                Image("background_default")
                     .resizable()
                     .scaledToFill()
                     .frame(width: geo.size.width, height: geo.size.height)

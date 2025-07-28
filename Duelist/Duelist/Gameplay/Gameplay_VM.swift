@@ -13,6 +13,8 @@ class GameplayVM: ObservableObject {
     @Published var winner: String? = nil
     @Published var localHealth = 30
     @Published var opponentHealth = 30
+    @Published var isBlocking = false
+    @Published var swordAngle: Double = 0
     @Published var opponentAction: Action = .idle {
         didSet {
             evaluateDamage() // Recalculate when opponent acts
@@ -20,9 +22,12 @@ class GameplayVM: ObservableObject {
     }
     @Published var myAction: Action = .idle {
         didSet {
+            isBlocking = (myAction == .block)
             evaluateDamage() // Recalculate when I act
         }
     }
+    @Published var opponent: String = "" // Add opponent data
+
 
     
     let multipeer: Multiplayer
@@ -37,6 +42,8 @@ class GameplayVM: ObservableObject {
             .sink { [weak self] state in
                 self?.opponentAction = state.action
                 self?.opponentHealth = state.health
+                self?.opponent = state.opponent
+
             }
             .store(in: &cancellables)
     }
@@ -47,10 +54,18 @@ class GameplayVM: ObservableObject {
         sendState(action: action)
     }
     
+    
+    
     func sendState(action: Action) {
         print("Sending state: \(action), health: \(localHealth)")
-        let state = GameState(action: action, health: localHealth)
+        let state = GameState(action: action, health: localHealth, opponent: opponent)
         multipeer.send(gameState: state)
+    }
+    
+    func updateSwordAngle(_ angle: Double) {
+        DispatchQueue.main.async { [weak self] in
+            self?.swordAngle = angle
+        }
     }
     
     private func evaluateDamage() {
@@ -71,6 +86,12 @@ class GameplayVM: ObservableObject {
         }else if opponentHealth <= 0{
             winner = "You"
         }
+    }
+    
+    func setOpponentUser(_ user: User) {
+            DispatchQueue.main.async { [weak self] in
+                self?.opponent = user.userID
+            }
     }
 }
 

@@ -267,5 +267,11 @@ class FirebaseService: ObservableObject {
         let downloadURL = try await imageRef.downloadURL()
         return downloadURL.absoluteString
     }
+    
+    func updateUserWins(_ userID: String, _ wins: Int) async throws {
+        var user = try await fetchUserProfile(uid: userID)
+        user.numberOfWins = wins
+        try await saveUserAsync(user)
+    }
 }
 

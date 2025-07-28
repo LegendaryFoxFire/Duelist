@@ -58,11 +58,11 @@ indirect enum NavigationPage {
         case .otherProfile(let user, let source):
             OtherProfile_V(user: user, sourceDestination: source)
         case .gameScreen:
-            NavMissing()
+            Loading_V()
         case .resultsScreen:
-            DuelResults_V(winnerName: "REPLACE WINNERNAME IN NAV ENUM")
+            NavMissing()
         case .postGameSummary:
-            DuelSummary_V()
+            NavMissing()
         case .friendsList:
             FriendsList_V()
         case .friendRequests:

@@ -20,7 +20,6 @@ class motion: ObservableObject {
     
     //For sound purposes
     private var previousAction: Action = .idle
-    private var lastAngle: Double = 0
     
     //prevent too many repeated actions
     private var actualAction: [Action] = []
@@ -29,11 +28,14 @@ class motion: ObservableObject {
     private var yawHistory: [Double] = []
     private let maxYawHistory = 15
     
+    // Improved angle smoothing
+    private var angleHistory: [Double] = []
+    private let maxAngleHistory = 5
+    private var baseAngle: Double = 0
+    private var hasSetBaseAngle = false
+    
     //For connection to Gameplay VM
     weak var delegate: GameplayVM?
-    
-    
-
 
     //Communication
     @Published var deviceMotionData = DeviceMotionData(yaw: 0, acceleration: 0, action: Action.idle)
@@ -91,11 +93,18 @@ class motion: ObservableObject {
         if yawHistory.count > maxYawHistory {
             yawHistory.removeFirst()
         }
+        
+        // Improved angle calculation
+        let rawAngle = degrees(radians: yaw)
+        let normalizedAngle = normalizeAngle(rawAngle)
+        let smoothedAngle = smoothAngle(normalizedAngle)
+        
+        // Update sword angle with smoothed value
+        swordAngle = Angle(degrees: smoothedAngle)
+        delegate?.updateSwordAngle(smoothedAngle)
 
         
-        //For image
-        swordAngle = Angle(degrees: degrees(radians: yaw))
-        self.lastAngle = swordAngle.degrees
+        
         deviceMotionData.acceleration = accelerationMagnitude
         deviceMotionData.yaw = degrees(radians: yaw)
         
@@ -137,6 +146,51 @@ class motion: ObservableObject {
 
     deinit {
         motionManager.stopDeviceMotionUpdates()
+    }
+    
+    // Smooth angle changes to prevent jittery rotation
+    private func smoothAngle(_ newAngle: Double) -> Double {
+        angleHistory.append(newAngle)
+        if angleHistory.count > maxAngleHistory {
+            angleHistory.removeFirst()
+        }
+        
+        // Return weighted average with more weight on recent values
+        var weightedSum = 0.0
+        var totalWeight = 0.0
+        
+        for (index, angle) in angleHistory.enumerated() {
+            let weight = Double(index + 1) // More recent angles get higher weight
+            weightedSum += angle * weight
+            totalWeight += weight
+        }
+        
+        return weightedSum / totalWeight
+    }
+    
+    // Normalize angle to prevent sudden jumps when crossing 0/360 boundary
+    private func normalizeAngle(_ angle: Double) -> Double {
+        var normalized = angle
+        
+        // Set base angle on first reading for relative positioning
+        if !hasSetBaseAngle {
+            baseAngle = angle
+            hasSetBaseAngle = true
+            return 0 // Start at 0 degrees
+        }
+        
+        // Calculate relative angle from base
+        normalized = angle - baseAngle
+        
+        // Keep angle in reasonable range (-180 to 180)
+        while normalized > 180 {
+            normalized -= 360
+        }
+        while normalized < -180 {
+            normalized += 360
+        }
+        
+        return normalized
     }
     
     

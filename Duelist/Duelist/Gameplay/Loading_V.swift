@@ -24,20 +24,22 @@ struct Loading_V: View {
     }
 
     var body: some View {
-        VStack(spacing: 24) {
-            Text("Finding Opponent...")
-                .font(.largeTitle)
-                .padding(.top)
-
-            ProgressView()
-                .scaleEffect(1.5)
-
-            Text("Waiting for a nearby device to join the game.")
-                .font(.subheadline)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.secondary)
+        D_Background {
+            VStack(spacing: 24) {
+                Text("Finding Opponent...")
+                    .font(.largeTitle)
+                    .padding(.top)
+                
+                ProgressView()
+                    .scaleEffect(1.5)
+                
+                Text("Waiting for a nearby device to join the game.")
+                    .font(.subheadline)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.secondary)
+            }
+            .padding()
         }
-        .padding()
         .onReceive(viewModel.$isConnected) { connected in
             if connected {
                 showGame = true

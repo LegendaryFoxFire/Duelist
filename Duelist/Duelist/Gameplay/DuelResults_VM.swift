@@ -1,13 +1,13 @@
 //
-//  Gameplay_VM.swift
+//  DuelResults_VM.swift
 //  Duelist
 //
-//  Created by Noah Aguillon on 7/26/25.
+//  Created by Noah Aguillon on 7/27/25.
 //
 
 import UIKit
 
-class Gameplay_VM: UIView {
+class DuelResults_VM: UIView {
 
     /*
     // Only override draw() if you perform custom drawing.

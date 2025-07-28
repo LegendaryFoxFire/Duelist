@@ -60,7 +60,7 @@ indirect enum NavigationPage {
         case .gameScreen:
             NavMissing()
         case .resultsScreen:
-            DuelResults_V()
+            DuelResults_V(winnerName: "REPLACE WINNERNAME IN NAV ENUM")
         case .postGameSummary:
             DuelSummary_V()
         case .friendsList:

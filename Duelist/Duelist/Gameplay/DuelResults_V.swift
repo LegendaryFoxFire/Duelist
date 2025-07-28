@@ -8,12 +8,34 @@
 import SwiftUI
 
 struct DuelResults_V: View {
+    var winnerName: String
 
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 30) {
+            Text("🏆 Duel Over!")
+                .font(.largeTitle)
+                .bold()
+
+            Text("\(winnerName) Wins!")
+                .font(.title)
+                .foregroundColor(.green)
+
+            Image(winnerName == "You" ? "playerProfile" : "opponentProfile") // Replace with your asset names
+                .resizable()
+                .scaledToFit()
+                .frame(width: 200, height: 200)
+                .clipShape(Circle())
+                .shadow(radius: 10)
+
+            Button("Play Again") {
+                // handle reset (optional)
+            }
+            .padding()
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(12)
+        }
+        .padding()
     }
 }
 
-#Preview {
-    DuelResults_V()
-}

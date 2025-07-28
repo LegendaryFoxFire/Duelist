@@ -10,6 +10,7 @@ import Combine
 
 class GameplayVM: ObservableObject {
     private var lastEvaluatedPair: (Action, Action) = (.idle, .idle)
+    @Published var winner: String? = nil
     @Published var localHealth = 30
     @Published var opponentHealth = 30
     @Published var opponentAction: Action = .idle {
@@ -63,6 +64,12 @@ class GameplayVM: ObservableObject {
 
         if myAction == .attack && opponentAction != .block {
             opponentHealth = max(opponentHealth - 10, 0)
+        }
+        
+        if(localHealth <= 0){
+            winner = "Opponent"
+        }else if opponentHealth <= 0{
+            winner = "You"
         }
     }
 }

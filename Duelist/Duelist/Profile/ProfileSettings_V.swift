@@ -27,6 +27,7 @@ struct ProfileSettings_V: View {
     @State private var newProfilePhoto: String = ""
     
     // Available themes
+    // In ProfileSettings_V, replace this line:
     private let availableThemes = ThemeConstants.availableThemes
 
     var body: some View {
@@ -34,7 +35,7 @@ struct ProfileSettings_V: View {
             BackButton(label:"Profile", destination: .profile) {
                 settingsContent
             }
-            .padding(.top, 50)
+            //.padding(.top,)
         }
         .sheet(isPresented: $isShowingCamera) {
             CameraImagePicker(
@@ -90,7 +91,7 @@ struct ProfileSettings_V: View {
     @ViewBuilder
     private var settingsContent: some View {
         if let currentUser = authManager.user {
-            VStack(spacing: 100) {
+            VStack(spacing: 50) {
                 VStack {
                     D_Label(title: "Settings", fontSize: Globals.LargeTitleFontSize)
                     
@@ -202,6 +203,27 @@ struct ProfileSettings_V: View {
                         }
                     }
                     .disabled(isUpdating)
+                    
+                    // Reminder Interval (only show if notifications are on)
+                    if currentUser.notificationsOn {
+                        D_Button(action: {
+                            // Empty action since Menu handles its own taps
+                        }) {
+                            Menu {
+                                ForEach([1, 2, 5, 10, 15, 30, 60, 120], id: \.self) { minutes in
+                                    Button("\(minutes) minutes") {
+                                        updateReminderInterval(minutes: minutes)
+                                    }
+                                }
+                            } label: {
+                                HStack {
+                                    Image(systemName: "clock")
+                                    Text("Reminder: \(currentUser.actualReminderInterval) min")
+                                }
+                            }
+                        }
+                        .disabled(isUpdating)
+                    }
                     
                     // Sign Out Button
                     D_Button(action: {
@@ -343,6 +365,22 @@ struct ProfileSettings_V: View {
                 var updatedUser = currentUser
                 updatedUser.notificationsOn.toggle()
                 
+                // If turning notifications on, request permission
+                if updatedUser.notificationsOn {
+                    let granted = await NotificationManager.shared.requestPermission()
+                    if !granted {
+                        // If permission denied, keep notifications off
+                        updatedUser.notificationsOn = false
+                        await MainActor.run {
+                            errorMessage = "Notification permission denied. Please enable in Settings."
+                            showError = true
+                        }
+                    }
+                } else {
+                    // If turning off, cancel any pending notifications
+                    NotificationManager.shared.cancelReminderNotifications()
+                }
+                
                 try await authManager.updateUser(updatedUser)
                 
                 await MainActor.run {
@@ -352,6 +390,33 @@ struct ProfileSettings_V: View {
             } catch {
                 await MainActor.run {
                     errorMessage = "Failed to update notifications setting: \(error.localizedDescription)"
+                    showError = true
+                    isUpdating = false
+                }
+            }
+        }
+    }
+    
+    // Add this method to ProfileSettings_V
+    private func updateReminderInterval(minutes: Int) {
+        guard let currentUser = authManager.user else { return }
+        
+        Task {
+            do {
+                await MainActor.run { isUpdating = true }
+                
+                var updatedUser = currentUser
+                updatedUser.reminderInterval = minutes // This will set the optional value
+                
+                try await authManager.updateUser(updatedUser)
+                
+                await MainActor.run {
+                    isUpdating = false
+                }
+                
+            } catch {
+                await MainActor.run {
+                    errorMessage = "Failed to update reminder interval: \(error.localizedDescription)"
                     showError = true
                     isUpdating = false
                 }

@@ -126,6 +126,7 @@ struct OtherProfile_V: View {
             volumeOn: true,
             theme: "background_0",
             notificationsOn: true,
+            reminderInterval: 30,
             friendsListIDs: [],
             friendRequestIDs: [],
             sentFriendRequestIDs: []

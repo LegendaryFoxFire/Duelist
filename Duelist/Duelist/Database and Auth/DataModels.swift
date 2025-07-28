@@ -24,9 +24,16 @@ struct User: Identifiable, Codable, Hashable {
     var volumeOn: Bool
     var theme: String
     var notificationsOn: Bool
+    var reminderInterval: Int?
     
     // Social graph (reference by UID)
     var friendsListIDs: [String]
     var friendRequestIDs: [String]
     var sentFriendRequestIDs: [String]
+    
+    // Computed property to get reminder interval with default
+    var actualReminderInterval: Int {
+        return reminderInterval ?? 30 // Default to 30 minutes
+    }
+
 }

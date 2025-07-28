@@ -32,6 +32,7 @@ struct D_TextField: View {
             .padding(Globals.SmallHPadding)
             .autocorrectionDisabled(true)
             .autocapitalization(.none)
+
             
         } else if type == .secure {
             SecureField(

@@ -1,33 +1,51 @@
 //
-//  LoadingGame_V.swift
+//  Multiplayer.swift
 //  Duelist
 //
 //  Created by Noah Aguillon on 7/26/25.
 //
 
 import Foundation
-import MultipeerConnectivity
 import Combine
 
 class LoadingGame_VM: ObservableObject {
     @Published var isConnected = false
     let multiplayer: Multiplayer
-
-    init() {
-        //let role = Multiplayer.assignRole(from: UIDevice.current.name)
-        let role = Multiplayer.MultipeerRole.browser
-        print("Device Name: \(UIDevice.current.name)")
-        print("Role: \(role)")
-
-        self.multiplayer = Multiplayer(role: role)
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(userID: String) {
+        self.multiplayer = Multiplayer(userID: userID, useTimeStagger: true)
+        setupConnectionListener()
+    }
+    
+    init(userID: String, useHashAssignment: Bool) {
+        if useHashAssignment {
+            let role = Multiplayer.assignRoleWithoutOpponent(userID: userID)
+            self.multiplayer = Multiplayer(role: role)
+        } else {
+            self.multiplayer = Multiplayer(userID: userID, useTimeStagger: true)
+        }
         
-
+        setupConnectionListener()
+    }
+    
+    init(role: Multiplayer.MultipeerRole) {
+        self.multiplayer = Multiplayer(role: role)
+        setupConnectionListener()
+    }
+    
+    private func setupConnectionListener() {
         multiplayer.$isConnected
             .receive(on: DispatchQueue.main)
-            .assign(to: &$isConnected)
-        print("Connected to peer")
-        
+            .sink { [weak self] connected in
+                self?.isConnected = connected
+                if connected {
+                    print("Connected")
+                }
+            }
+            .store(in: &cancellables)
     }
 }
+
 
 

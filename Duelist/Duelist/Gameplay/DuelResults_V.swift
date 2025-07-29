@@ -209,32 +209,32 @@ struct DuelResults_V: View {
                 Spacer()
                 
                 VStack(spacing: 15) {
-                    Button(action: {
-                        handleRematchRequest()
-                    }) {
-                        Text("⚔️ Request Rematch")
-                            .font(.title2)
-                            .bold()
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 15)
-                            .background(
-                                LinearGradient(
-                                    gradient: Gradient(colors: [.blue, .purple]),
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
-                            .cornerRadius(12)
-                            .shadow(color: .blue.opacity(0.4), radius: 8, x: 0, y: 4)
-                    }
+//                    Button(action: {
+//                        handleRematchRequest()
+//                    }) {
+//                        Text("Request Rematch")
+//                            .font(.title2)
+//                            .bold()
+//                            .foregroundColor(.white)
+//                            .frame(maxWidth: .infinity)
+//                            .padding(.vertical, 15)
+//                            .background(
+//                                LinearGradient(
+//                                    gradient: Gradient(colors: [.blue, .purple]),
+//                                    startPoint: .leading,
+//                                    endPoint: .trailing
+//                                )
+//                            )
+//                            .cornerRadius(12)
+//                            .shadow(color: .blue.opacity(0.4), radius: 8, x: 0, y: 4)
+//                    }
                     
                     Button(action: {
                         NavigationHandler.animatePageChange {
                             nav.currentPage = .mainMenu
                         }
                     }) {
-                        Text("🏠 Main Menu")
+                        Text("Main Menu")
                             .font(.headline)
                             .foregroundColor(.primary)
                             .frame(maxWidth: .infinity)
@@ -244,23 +244,7 @@ struct DuelResults_V: View {
                     }
                 }
                 .padding(.horizontal, 40)
-                .padding(.bottom, 20)
-                
-                if viewModel.currentUserWon {
-                    HStack(spacing: 20) {
-                        Text("🎉")
-                            .font(.title)
-                        Text("✨")
-                            .font(.title)
-                        Text("🌟")
-                            .font(.title)
-                        Text("✨")
-                            .font(.title)
-                        Text("🎉")
-                            .font(.title)
-                    }
-                    .padding(.bottom, 20)
-                }
+                .padding(.bottom, 50)
             }
             .padding(.horizontal, 20)
         }

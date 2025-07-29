@@ -2,7 +2,7 @@
 //  ActionStats.swift
 //  Duelist
 //
-//  Created by Noah on 7/28/25.
+//  Created by Noah Aguillon on 7/28/25.
 //
 
 import Foundation

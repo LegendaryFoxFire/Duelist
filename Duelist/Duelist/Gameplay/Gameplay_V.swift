@@ -39,7 +39,7 @@ struct GameplayView: View {
                     
                     ZStack {
                         if viewModel.isBlocking {
-                            Image(systemName: "shield")
+                            Image("shield")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 250, height: 250)
@@ -56,7 +56,7 @@ struct GameplayView: View {
                                     .rotationEffect(.degrees(viewModel.swordAngle))
                                     .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 5)
                             } else {
-                                Image(systemName: "flame.fill")
+                                Image("sword_0_tp_b")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 300, height: 300)

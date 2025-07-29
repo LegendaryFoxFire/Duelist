@@ -36,11 +36,27 @@ struct Register: View {
                     }
                     
                     D_Button(action: {
+                        // Validate email format
+                        guard isValidEmail(email) else {
+                            errorMessage = "Please enter a valid email address"
+                            showError = true
+                            return
+                        }
+                        
+                        // Validate password length
+                        guard password.count >= 6 else {
+                            errorMessage = "Password must be at least 6 characters long"
+                            showError = true
+                            return
+                        }
+                        
+                        // Validate passwords match
                         guard password == reEnterPassword else {
                             errorMessage = "Passwords don't match"
                             showError = true
                             return
                         }
+                        
                         Task {
                             do {
                                 try await authManager.signUp(email: email, password: password)
@@ -68,6 +84,12 @@ struct Register: View {
                 .padding()
             }
         }
+    }
+    
+    private func isValidEmail(_ email: String) -> Bool {
+        let emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return emailPredicate.evaluate(with: email)
     }
 }
 

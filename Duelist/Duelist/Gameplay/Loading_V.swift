@@ -38,14 +38,6 @@ struct Loading_V: View {
                     .font(.subheadline)
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
-                
-                // Show current role for debugging
-//                if let role = viewModel.multiplayer.currentRole {
-//                    Text("Role: \(role == .advertiser ? "Advertising" : "Browsing")")
-//                        .font(.caption)
-//                        .foregroundColor(.secondary)
-//                        .padding(.top, 10)
-//                }
             }
             .padding()
         }
@@ -63,11 +55,6 @@ struct Loading_V: View {
                 )
             } else {
                 Text("Loading game...")
-            }
-        }
-        .onAppear {
-            if let userID = authManager.user?.userID {
-                print("📱 User ID available: \(userID)")
             }
         }
     }

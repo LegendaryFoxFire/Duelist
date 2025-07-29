@@ -48,6 +48,8 @@ struct DuelistApp: App {
         }
     }
     
+    // notifications functions
+    
     private func setupNotifications() {
           Task {
               await notificationManager.requestPermission()

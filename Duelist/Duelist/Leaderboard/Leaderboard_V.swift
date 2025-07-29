@@ -43,7 +43,7 @@ struct Leaderboard_V: View {
                     } else {
                         D_List {
                             VStack {
-                                // "search suggestion is already there"
+                                // "'search' is built into a d_textfield of .search type's suggestion box"
                                 D_TextField(text: $searchText, type: .search, keyword: "players")
                                 
                                 HStack {

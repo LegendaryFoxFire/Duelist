@@ -27,10 +27,4 @@ func filterFriends(listToBeFiltered: [Friend], friendsToFilter: [Friend]) -> [Fr
     return filteredList
 }
 
-/*
- chatgpt came up with this to filter based solely on IDs for efficiency
- func filterFriends(listToBeFiltered: [Friend], friendsToFilter: [Friend]) -> [Friend] {
-     let filterIDs = Set(friendsToFilter.map { $0.id })
-     return listToBeFiltered.filter { !filterIDs.contains($0.id) }
- }
- */
+

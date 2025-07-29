@@ -4,6 +4,7 @@
 //
 //  Created by Sam on 22/07/25.
 //
+// profile shown when you tap on a leaderboard entry in list
 
 import SwiftUI
 
@@ -59,8 +60,4 @@ struct LeaderboardProfile: View {
             }
         }
     }
-}
-
-#Preview {
-    LeaderboardProfile(friend: user02)
 }

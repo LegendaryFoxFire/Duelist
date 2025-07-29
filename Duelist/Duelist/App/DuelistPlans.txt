@@ -1,3 +1,9 @@
-
 This file is meant to document the intended future features not outlined in the
     subdirectory *ideas.txts
+
+.ideas files are working document for each conceptual portion of project to be used for logging issues, extensions, etc
+
+issues:
+
+extensions:
+

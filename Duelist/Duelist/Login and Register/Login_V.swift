@@ -4,8 +4,6 @@
     //
     //  Created by Sam on 18/07/25.
     //
-
-
     import SwiftUI
 
     struct Login: View {
@@ -76,7 +74,6 @@
         }
         
     }
-
 
     #Preview {
         Login()

@@ -35,9 +35,17 @@ struct DuelistApp: App {
                 .environmentObject(notificationManager)
                 .onAppear {
                     setupNotifications()
-                    if authManager.user?.volumeOn == true {
-                        AudioManager.shared.playLoopingMusic(named: "Through the Mystic Woods")
+                    
+                    // Give Firebase time to load, then start music for new users if needed
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        if authManager.user == nil {
+                            AudioManager.shared.playLoopingMusic(named: "Through the Mystic Woods")
+                        }
                     }
+                }
+                .onChange(of: authManager.user) { oldUser, newUser in
+                    // Handle music when user auth state changes
+                    handleMusicForCurrentUser()
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
                     // App is going to background
@@ -53,10 +61,10 @@ struct DuelistApp: App {
     // notifications functions
     
     private func setupNotifications() {
-          Task {
-              await notificationManager.requestPermission()
-          }
-      }
+        Task {
+            await notificationManager.requestPermission()
+        }
+    }
     
     private func handleAppGoingToBackground() {
         AudioManager.shared.stopMusic()
@@ -66,16 +74,22 @@ struct DuelistApp: App {
             notificationManager.scheduleReminderNotification(after: interval)
         }
     }
-      
-      private func handleAppBecameActive() {
-          // Cancel any pending notifications since user is back
-          notificationManager.cancelReminderNotifications()
-          notificationManager.clearBadge()
-          
-          if authManager.user?.volumeOn == true {
-              AudioManager.shared.playLoopingMusic(named: "Through the Mystic Woods")
-          }
-      }
     
-
+    private func handleAppBecameActive() {
+        notificationManager.cancelReminderNotifications()
+        notificationManager.clearBadge()
+        
+        // Handle music based on current user state
+        handleMusicForCurrentUser()
+    }
+    
+    private func handleMusicForCurrentUser() {
+        let shouldPlayMusic = authManager.user?.volumeOn ?? true
+        
+        if shouldPlayMusic {
+            AudioManager.shared.playLoopingMusic(named: "Through the Mystic Woods")
+        } else {
+            AudioManager.shared.stopMusic()
+        }
+    }
 }

@@ -174,6 +174,7 @@ struct ProfileSettings_V: View {
                     // Volume Toggle
                     D_Button(action: {
                         toggleVolume()
+                        
                     }) {
                         HStack {
                             Image(systemName: currentUser.volumeOn ? "speaker.wave.2" : "speaker.slash")
@@ -310,6 +311,11 @@ struct ProfileSettings_V: View {
                 
                 var updatedUser = currentUser
                 updatedUser.volumeOn.toggle()
+                if(updatedUser.volumeOn == true){
+                    AudioManager.shared.playLoopingMusic(named: "Through the Mystic Woods")
+                }else if (updatedUser.volumeOn == false){
+                    AudioManager.shared.stopMusic()
+                }
                 
                 try await authManager.updateUser(updatedUser)
                 

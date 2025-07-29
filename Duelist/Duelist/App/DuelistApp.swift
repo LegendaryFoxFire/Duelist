@@ -12,6 +12,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     FirebaseApp.configure()
+      AudioManager.shared.setupAudioSession()
 
     return true
   }
@@ -36,6 +37,9 @@ struct DuelistApp: App {
                 .environmentObject(notificationManager)
                 .onAppear {
                     setupNotifications()
+                    if authManager.user?.volumeOn == true {
+                        AudioManager.shared.playLoopingMusic(named: "Through the Mystic Woods")
+                    }
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
                     // App is going to background
@@ -55,6 +59,7 @@ struct DuelistApp: App {
       }
     
     private func handleAppGoingToBackground() {
+        AudioManager.shared.stopMusic()
         // Only schedule if notifications are enabled in user settings
         if authManager.user?.notificationsOn == true {
             let interval = authManager.user?.reminderInterval ?? 30  // Use user's preference or default to 30
@@ -66,5 +71,11 @@ struct DuelistApp: App {
           // Cancel any pending notifications since user is back
           notificationManager.cancelReminderNotifications()
           notificationManager.clearBadge()
+          
+          if authManager.user?.volumeOn == true {
+              AudioManager.shared.playLoopingMusic(named: "Through the Mystic Woods")
+          }
       }
+    
+
 }

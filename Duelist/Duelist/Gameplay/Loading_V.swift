@@ -9,11 +9,12 @@ import SwiftUI
 
 struct Loading_V: View {
     @StateObject private var viewModel = LoadingGame_VM()
-    @State private var showGame = true
+    @EnvironmentObject var authManager: AuthManager
+    @State private var showGame = false
     
     var gameplayContent: some View {
             let multiplayer = viewModel.multiplayer
-            let gameVM = GameplayVM(multipeer: multiplayer)
+            let gameVM = GameplayVM(multipeer: multiplayer, currentUser: authManager.user?.username ?? "Player")
             let motionVM = motion()
             motionVM.delegate = gameVM
 

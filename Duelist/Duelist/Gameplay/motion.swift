@@ -12,32 +12,27 @@ import QuartzCore
 import SwiftUI
 
 class motion: ObservableObject {
-    //For Motion updates
+    @EnvironmentObject var authManager: AuthManager
+
     private let motionManager = CMMotionManager()
     private var lastUpdateTime: CFTimeInterval = CACurrentMediaTime()
     private var lastAccelleration: Double = 0
     private var lastyaw: Double = 0
     
-    //For sound purposes
     private var previousAction: Action = .idle
     
-    //prevent too many repeated actions
     private var actualAction: [Action] = []
     
-    //For better shake detection
     private var yawHistory: [Double] = []
     private let maxYawHistory = 15
     
-    // Improved angle smoothing
     private var angleHistory: [Double] = []
     private let maxAngleHistory = 5
     private var baseAngle: Double = 0
     private var hasSetBaseAngle = false
     
-    //For connection to Gameplay VM
     weak var delegate: GameplayVM?
 
-    //Communication
     @Published var deviceMotionData = DeviceMotionData(yaw: 0, acceleration: 0, action: Action.idle)
     @Published var swordAngle: Angle = .zero
     
@@ -68,22 +63,17 @@ class motion: ObservableObject {
     
     func handleDeviceMotionUpdate(deviceMotion: CMDeviceMotion) {
         
-        //Get time and Delta time
         let currentTime = CACurrentMediaTime()
         let deltaTime = currentTime - self.lastUpdateTime
         self.lastUpdateTime = currentTime
 
-        //Acceleration and magnitude in G's
         let acc = deviceMotion.userAcceleration
-//        let xAccel = acc.x
-//        let yAccel = acc.y
-//        let zAccel = acc.z
+
         let accelerationMagnitude = sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z)
         
         let jerk = abs(accelerationMagnitude - self.lastAccelleration) / max(deltaTime, 0.001)
         self.lastAccelleration = accelerationMagnitude
         
-        //let yaw = deviceMotion.attitude.yaw
         let yaw = deviceMotion.attitude.yaw
         let yawDelta = abs(yaw - self.lastyaw)
         self.lastyaw = yaw
@@ -98,7 +88,6 @@ class motion: ObservableObject {
         let normalizedAngle = normalizeAngle(rawAngle)
         let smoothedAngle = smoothAngle(normalizedAngle)
         
-        // Update sword angle with smoothed value
         swordAngle = Angle(degrees: smoothedAngle)
         delegate?.updateSwordAngle(smoothedAngle)
         
@@ -106,7 +95,6 @@ class motion: ObservableObject {
         deviceMotionData.yaw = degrees(radians: yaw)
         
         let currentAction = classifyMotion(acceleration: accelerationMagnitude, jerk: jerk, yawDelta: yawDelta)
-        //print("xAccel: \(xAccel), yAccel: \(yAccel), zAccel: \(zAccel)")
         actualAction.append(currentAction)
         
         if(actualAction.count == 3){
@@ -115,29 +103,22 @@ class motion: ObservableObject {
             actualAction.removeAll()
 
             if newAction != previousAction {
-                print("Delagating properly? : \(String(describing: delegate))")
-                print("New Actino: \(newAction)")
                 previousAction = newAction
                 delegate?.handleLocalAction(newAction)
             }
         }
         
-//        if(actualAction.count == 10){
-//            deviceMotionData.action = classifyAction(actualAction)
-//            actualAction.removeAll()
-//        }
-        
-        //print("Action: \(currentAction), Jerk: \(jerk), Acceleration: \(accelerationMagnitude), Yaw: \(degrees(radians: yaw))")
-        print("Action: \(currentAction)")
-        
-        switch currentAction {
-        case .attack:
-            SoundManager.shared.playSound(named: "Strikes 1", time: TimeInterval(0))
-        case .block:
-            SoundManager.shared.playSound(named: "Block 2", time: TimeInterval(0))
-        default:
-            break
+        if((authManager.user?.volumeOn) != nil){
+            switch currentAction {
+            case .attack:
+                AudioManager.shared.playSound(named: "Strikes 1",)
+            case .block:
+                AudioManager.shared.playSound(named: "Block 2",)
+            default:
+                break
+            }
         }
+        
     }
 
     deinit {
@@ -168,7 +149,7 @@ class motion: ObservableObject {
         if !hasSetBaseAngle {
             baseAngle = angle
             hasSetBaseAngle = true
-            return 0 // Start at 0 degrees
+            return 0
         }
         
         normalized = angle - baseAngle
@@ -182,7 +163,6 @@ class motion: ObservableObject {
         
         return normalized
     }
-    
     
     func classifyMotion(acceleration: Double, jerk: Double, yawDelta: Double) -> Action {
         if acceleration > 0.7 && jerk < 1.5 {
@@ -209,7 +189,7 @@ class motion: ObservableObject {
         for i in 1..<history.count - 1 {
             let delta1 = history[i] - history[i - 1]
             let delta2 = history[i + 1] - history[i]
-            if delta1 * delta2 < 0 { // direction changed
+            if delta1 * delta2 < 0 {
                 changes += 1
             }
         }

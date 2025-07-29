@@ -11,23 +11,10 @@ struct GameplayView: View {
     @ObservedObject var viewModel: GameplayVM
     @StateObject var motion: motion
     @EnvironmentObject var authManager: AuthManager
-    @State private var opponentUser: User? = nil
-
+        
     var body: some View {
         if let winner = viewModel.winner {
-            DuelResults_V(viewModel: DuelResults_VM(winnerName: viewModel.winner!, currentUser: authManager.user, opponentUser: opponentUser, authManager: authManager))
-                .task {
-                        if opponentUser == nil { // Prevent reloading
-                            FirebaseService.shared.getUser(by: viewModel.opponent) { result in
-                                switch result {
-                                case .success(let user):
-                                    self.opponentUser = user
-                                case .failure(let error):
-                                    print("Failed to get user: \(error)")
-                                }
-                            }
-                        }
-                    }
+            DuelResults_V(viewModel: DuelResults_VM(winnerName: viewModel.winner!, currentUser: authManager.user, authManager: authManager, multiplayer: viewModel.multipeer, actionStats: viewModel.getActionStats()))
         } else {
             ZStack {
                 D_Background {
@@ -52,7 +39,7 @@ struct GameplayView: View {
                     
                     ZStack {
                         if viewModel.isBlocking {
-                            Image("shield")
+                            Image(systemName: "shield")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 250, height: 250)
@@ -69,7 +56,7 @@ struct GameplayView: View {
                                     .rotationEffect(.degrees(viewModel.swordAngle))
                                     .shadow(color: .yellow.opacity(0.8), radius: 15, x: 0, y: 5)
                             } else {
-                                Image("sword_0_tp_b")
+                                Image(systemName: "flame.fill")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 300, height: 300)
@@ -126,9 +113,6 @@ struct GameplayView: View {
                     .padding(.bottom, 50)
                 }
             }
-//            .onChange(of: viewModel.myAction) { action in
-//
-//            }
         }
     }
     

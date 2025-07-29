@@ -12,6 +12,7 @@ struct GameState: Codable {
     let action: Action
     let health: Int
     let opponent: String
+    let isReplayRequest: Bool?
 }
 
 

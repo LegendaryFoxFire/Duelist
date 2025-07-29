@@ -15,13 +15,14 @@ class Multiplayer: NSObject, ObservableObject, MCSessionDelegate, MCNearbyServic
     private let serviceType = "duelist"
     private let myPeerID = MCPeerID(displayName: UIDevice.current.name)
     
-    private lazy var session = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
+    lazy var session = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
     private lazy var advertiser = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: serviceType)
     
     var onConnected: (() -> Void)?
     
     @Published var receivedGameState: GameState?
     @Published var isConnected = false
+    @Published var connectedPeerName: String? = nil
     
     init(role: MultipeerRole) {
         super.init()
@@ -38,8 +39,6 @@ class Multiplayer: NSObject, ObservableObject, MCSessionDelegate, MCNearbyServic
         }
     }
 
-
-    
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         invitationHandler(true, session)
     }
@@ -47,16 +46,21 @@ class Multiplayer: NSObject, ObservableObject, MCSessionDelegate, MCNearbyServic
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         print("Peer \(peerID.displayName) changed state to \(state.rawValue)")
         DispatchQueue.main.async {
-                self.isConnected = (state == .connected)
+            self.isConnected = (state == .connected)
+            if state == .connected {
+                self.connectedPeerName = peerID.displayName
+            } else {
+                self.connectedPeerName = nil
+            }
         }
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         if let gameState = try? JSONDecoder().decode(GameState.self, from: data) {
-                    DispatchQueue.main.async {
-                        self.receivedGameState = gameState
-                    }
-                }
+            DispatchQueue.main.async {
+                self.receivedGameState = gameState
+            }
+        }
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
@@ -68,16 +72,27 @@ class Multiplayer: NSObject, ObservableObject, MCSessionDelegate, MCNearbyServic
         print("Lost peer: \(peerID.displayName)")
     }
 
-    
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {}
     func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {}
     func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: (any Error)?) {}
     
     func send(gameState: GameState) {
         guard !session.connectedPeers.isEmpty,
-              let data = try? JSONEncoder().encode(gameState) else { return }
+              let data = try? JSONEncoder().encode(gameState) else {
+            print("❌ Failed to send game state: No connected peers or encoding failed")
+            return
+        }
         
-        try? session.send(data, toPeers: session.connectedPeers, with: .reliable)
+        do {
+            try session.send(data, toPeers: session.connectedPeers, with: .reliable)
+            print("📤 Successfully sent GameState: action=\(gameState.action), health=\(gameState.health), opponent=\(gameState.opponent), isReplayRequest=\(gameState.isReplayRequest ?? false)")
+        } catch {
+            print("❌ Error sending game state: \(error)")
+        }
+    }
+    
+    func getOpponentName() -> String? {
+        return connectedPeerName
     }
     
     enum MultipeerRole {
@@ -88,6 +103,4 @@ class Multiplayer: NSObject, ObservableObject, MCSessionDelegate, MCNearbyServic
     static func assignRole(from id: String) -> MultipeerRole {
         return id.hash % 2 == 0 ? .advertiser : .browser
     }
-
 }
-

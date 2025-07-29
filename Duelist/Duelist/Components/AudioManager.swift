@@ -12,6 +12,9 @@ class AudioManager {
     static let shared = AudioManager()
     private var player: AVAudioPlayer?
     
+    var isPlaying: Bool {
+        return player?.isPlaying ?? false
+    }
     
     func setupAudioSession() {
         do {
@@ -24,6 +27,9 @@ class AudioManager {
 
     func playLoopingMusic(named filename: String, onlyIfEnabled enabled: Bool = true) {
         guard enabled else { return }
+        
+        // Stop any existing music first to prevent overlapping
+        stopMusic()
 
         guard let url = Bundle.main.url(forResource: filename, withExtension: "mp3") else {
             print("Audio file not found: \(filename)")
@@ -50,9 +56,10 @@ class AudioManager {
         }
 
         do {
-            player = try AVAudioPlayer(contentsOf: url)
-            player?.prepareToPlay()
-            player?.play()
+            // Create a separate player for sound effects so they don't interfere with music
+            let soundPlayer = try AVAudioPlayer(contentsOf: url)
+            soundPlayer.prepareToPlay()
+            soundPlayer.play()
         } catch {
             print("Failed to play audio: \(error)")
         }
@@ -60,8 +67,6 @@ class AudioManager {
 
     func stopMusic() {
         player?.stop()
+        player = nil
     }
-    
 }
-
-

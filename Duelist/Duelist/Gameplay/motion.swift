@@ -110,7 +110,16 @@ class motion: ObservableObject {
             }
         }
         
-
+        let volumeEnabled = authManager.user?.volumeOn ?? true
+        switch currentAction {
+        case .attack:
+            AudioManager.shared.playSound(named: "Strikes 1", onlyIfEnabled: volumeEnabled)
+        case .block:
+            AudioManager.shared.playSound(named: "Block 2", onlyIfEnabled: volumeEnabled)
+        default:
+            break
+        }
+        
     }
 
     deinit {

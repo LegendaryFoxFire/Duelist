@@ -4,9 +4,10 @@
 //
 //  Created by John Bukoski on 7/19/25.
 //
+// Allows for "hyper-link-esque style navigation that doesn't push onto a stack
 import SwiftUI
 
-/// Represents all possible navigation destinations in the Duelist app.
+// Represents all possible navigation destinations in the Duelist app.
 indirect enum NavigationPage {
     // MARK: - Authentication
     case title

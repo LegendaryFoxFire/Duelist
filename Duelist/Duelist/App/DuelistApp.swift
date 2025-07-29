@@ -29,8 +29,6 @@ struct DuelistApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(navHandler)
-                .environmentObject(CurrentUserManager.shared)
-                .environmentObject(GlobalUsersManager.shared)
                 .environmentObject(FirebaseService.shared)
                 .environmentObject(authManager)
                 .environmentObject(notificationManager)
@@ -47,6 +45,8 @@ struct DuelistApp: App {
                 }
         }
     }
+    
+    // notifications functions
     
     private func setupNotifications() {
           Task {

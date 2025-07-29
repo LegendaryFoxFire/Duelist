@@ -67,7 +67,6 @@ struct Register: View {
                 }
                 .padding()
             }
-            //.padding()
         }
     }
 }

@@ -8,7 +8,8 @@
 import Foundation
 
 struct ThemeConstants {
-    static let availableThemes = ["Default", "Forest"] // "Dark" removed for now too many ui nits to be picked atm.
+    // "Dark" removed for now too many ui nits to be picked atm.
+    static let availableThemes = ["Default", "Forest"]
     
     static func getBackgroundImage(for theme: String) -> String {
         switch theme {
@@ -18,10 +19,6 @@ struct ThemeConstants {
             return "background_dark"
         case "Forest":
             return "background_forest"
-        case "Light":
-            return "background_default"  // Placeholder until you add this asset
-        case "Ocean":
-            return "background_default"  // Placeholder until you add this asset
         default:
             return "background_default"
         }

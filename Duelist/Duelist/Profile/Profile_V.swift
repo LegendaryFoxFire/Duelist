@@ -10,7 +10,6 @@ import SwiftUI
 struct Profile_V: View {
     @EnvironmentObject var nav: NavigationHandler
     @EnvironmentObject var authManager: AuthManager
-    @EnvironmentObject var globalUsersManager: GlobalUsersManager
     
     @State private var userRank: Int = 0
     @State private var isLoadingRank = true

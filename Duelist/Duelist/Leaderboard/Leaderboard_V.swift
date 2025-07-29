@@ -122,7 +122,19 @@ struct Leaderboard_V: View {
     }
     
     private func getRankForUser(_ user: User, in sortedList: [User]) -> Int {
-        return (sortedList.firstIndex(where: { $0.userID == user.userID }) ?? 0) + 1
+        var currentRank = 1
+        var lastWins: Int? = nil
+        var rankMap: [String: Int] = [:]
+        
+        for sortedUser in sortedList {
+            if sortedUser.numberOfWins != lastWins {
+                currentRank = rankMap.count + 1
+                lastWins = sortedUser.numberOfWins
+            }
+            rankMap[sortedUser.userID] = currentRank
+        }
+        
+        return rankMap[user.userID] ?? 0
     }
 }
 

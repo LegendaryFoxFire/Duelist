@@ -1,5 +1,6 @@
 .ideas files are working document for each conceptual portion of project to be used for logging issues, extensions, etc
 
 issues:
-
+ pfp loads in late - fix
+ 
 extensions:

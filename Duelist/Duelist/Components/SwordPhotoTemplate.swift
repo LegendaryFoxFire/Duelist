@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-//enum SwordPhotoSize {
-//    case small
-//    case medium
-//    case large
-//}
-
 struct SwordPhotoTemplate: View {
 var image: String
 

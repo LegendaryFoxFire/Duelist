@@ -104,11 +104,11 @@ struct FriendListRow: View {
                 ProfilePhotoHelper.getProfileImageView(for: friend, size: .small)
                 
                 VStack(alignment: .leading) {
-                    Text(friend.username)
+                    D_Label(title: friend.username, fontSize: Globals.HeadingFontSize)
                         .font(.headline)
                         .foregroundColor(.primary)
                     
-                    Text("\(friend.numberOfWins) wins")
+                    D_Label(title: "\(friend.numberOfWins) wins", fontSize: Globals.HeadingFontSize)
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }

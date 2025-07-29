@@ -5,8 +5,6 @@
 //  Created by John Bukoski on 7/15/25.
 //
 
-//FIXME: THESE ARE JUST DUMMY LISTS THAT THE DATABASE WILL POPULATE FOR EACH USER
-
 import Foundation
 
 struct Friend: Identifiable, Hashable { //Hashable so we can make it into a set
@@ -27,10 +25,4 @@ func filterFriends(listToBeFiltered: [Friend], friendsToFilter: [Friend]) -> [Fr
     return filteredList
 }
 
-/*
- chatgpt came up with this to filter based solely on IDs for efficiency
- func filterFriends(listToBeFiltered: [Friend], friendsToFilter: [Friend]) -> [Friend] {
-     let filterIDs = Set(friendsToFilter.map { $0.id })
-     return listToBeFiltered.filter { !filterIDs.contains($0.id) }
- }
- */
+

@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-var currentLoggedInUser: Friend = user04 //FIXME: Need to update the user info after they log in. Needs to be accessed by other views too
-
 struct Main_V: View {
     @EnvironmentObject var nav: NavigationHandler
     
@@ -21,7 +19,6 @@ struct Main_V: View {
                     .aspectRatio(contentMode: .fit)
                 
                 D_Button(action: {
-                    // FIXME: implement login database logic
                     NavigationHandler.animatePageChange {
                         nav.currentPage = .dualScreen
                     }
@@ -30,7 +27,6 @@ struct Main_V: View {
                 }
                 
                 D_Button(action: {
-                    // FIXME: implement login database logic
                     NavigationHandler.animatePageChange {
                         nav.currentPage = .storePage
                     }
@@ -39,7 +35,6 @@ struct Main_V: View {
                 }
                 
                 D_Button(action: {
-                    // FIXME: implement login database logic
                     NavigationHandler.animatePageChange {
                         nav.currentPage = .profile
                     }
@@ -48,7 +43,6 @@ struct Main_V: View {
                 }
                 
                 D_Button(action: {
-                    // FIXME: implement login database logic
                     NavigationHandler.animatePageChange {
                         nav.currentPage = .friendsList
                     }
@@ -57,7 +51,6 @@ struct Main_V: View {
                 }
                 
                 D_Button(action: {
-                    // FIXME: implement login database logic
                     NavigationHandler.animatePageChange {
                         nav.currentPage = .leaderboard
                     }

@@ -120,7 +120,3 @@ struct Store_V: View {
         }
     }
 }
-
-//#Preview {
-//    Store_V()
-//}

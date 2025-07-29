@@ -1,2 +1,7 @@
+.ideas files are working document for each conceptual portion of project to be used for logging issues, extensions, etc
+
+issues:
+
+extensions:
 add more insightful alerts for same password etc
-add loading wheel if necessary
+add loading wheel

@@ -1,1 +1,5 @@
-reimplement transparent and blacked out image stuff sorry about breaking it
+.ideas files are working document for each conceptual portion of project to be used for logging issues, extensions, etc
+
+issues:
+
+extensions:

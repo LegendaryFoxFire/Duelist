@@ -4,15 +4,11 @@
     //
     //  Created by Sam on 18/07/25.
     //
-
-
     import SwiftUI
 
     struct Login: View {
         @EnvironmentObject var authManager: AuthManager
         @EnvironmentObject var nav: NavigationHandler
-        @EnvironmentObject var userManager: CurrentUserManager
-        @EnvironmentObject var globalUsersManager: GlobalUsersManager
          
         @State private var email: String = ""
         @State private var password: String = ""
@@ -76,7 +72,6 @@
         }
         
     }
-
 
     #Preview {
         Login()

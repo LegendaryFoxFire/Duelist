@@ -10,7 +10,6 @@ import SwiftUI
 struct Profile_V: View {
     @EnvironmentObject var nav: NavigationHandler
     @EnvironmentObject var authManager: AuthManager
-    @EnvironmentObject var globalUsersManager: GlobalUsersManager
     
     @State private var userRank: Int = 0
     @State private var isLoadingRank = true
@@ -40,27 +39,27 @@ struct Profile_V: View {
                         .offset(x: 75, y: -120)
                 }
                 
-                VStack(spacing: 10) {
-                    HStack {
-                        Text("Username: ")
+                Grid(alignment: .leading, horizontalSpacing: Globals.StandardHSpacing, verticalSpacing: Globals.StandardVSpacing) {
+                    GridRow {
+                        D_Label(title: "Username: ", fontSize: Globals.SmallTitleFontSize)
                             .font(.title)
                             .bold()
-                        Text(currentUser.username)
+                        D_Label(title:currentUser.username, fontSize: Globals.SmallTitleFontSize)
                             .font(.title)
                         Spacer()
                     }
                     
-                    HStack {
-                        Text("Total Wins: ")
+                    GridRow {
+                        D_Label(title: "Total Wins: ", fontSize:Globals.SmallTitleFontSize)
                             .font(.title)
                             .bold()
-                        Text(String(currentUser.numberOfWins))
+                        D_Label(title: String(currentUser.numberOfWins), fontSize: Globals.SmallTitleFontSize)
                             .font(.title)
                         Spacer()
                     }
                     
-                    HStack {
-                        Text("Rank: ")
+                    GridRow {
+                        D_Label(title: "Rank: ", fontSize: Globals.SmallTitleFontSize)
                             .font(.title)
                             .bold()
                         
@@ -68,12 +67,13 @@ struct Profile_V: View {
                             ProgressView()
                                 .scaleEffect(0.8)
                         } else {
-                            Text(String(userRank))
+                            D_Label(title: String(userRank), fontSize: Globals.SmallTitleFontSize)
                                 .font(.title)
                         }
                         Spacer()
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .center)
                 .padding()
                 .overlay(
                     RoundedRectangle(cornerRadius: Globals.CornerRadius)

@@ -4,6 +4,7 @@
 //
 //  Created by Sam on 18/07/25.
 //
+// Shown when user opens the app for the first time
 
 import SwiftUI
 

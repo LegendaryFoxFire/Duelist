@@ -43,7 +43,7 @@ struct Leaderboard_V: View {
                     } else {
                         D_List {
                             VStack {
-                                // "search suggestion is already there"
+                                // "'search' is built into a d_textfield of .search type's suggestion box"
                                 D_TextField(text: $searchText, type: .search, keyword: "players")
                                 
                                 HStack {
@@ -71,7 +71,7 @@ struct Leaderboard_V: View {
                                         } label: {
                                             HStack {
                                                 // Rank number
-                                                Text("\(getRankForUser(user, in: sortedUsers))")
+                                                D_Label(title: "\(getRankForUser(user, in: sortedUsers))", fontSize: Globals.HeadingFontSize)
                                                     .font(.headline)
                                                     .foregroundColor(.primary)
                                                     .frame(width: 30)
@@ -122,7 +122,19 @@ struct Leaderboard_V: View {
     }
     
     private func getRankForUser(_ user: User, in sortedList: [User]) -> Int {
-        return (sortedList.firstIndex(where: { $0.userID == user.userID }) ?? 0) + 1
+        var currentRank = 1
+        var lastWins: Int? = nil
+        var rankMap: [String: Int] = [:]
+        
+        for sortedUser in sortedList {
+            if sortedUser.numberOfWins != lastWins {
+                currentRank = rankMap.count + 1
+                lastWins = sortedUser.numberOfWins
+            }
+            rankMap[sortedUser.userID] = currentRank
+        }
+        
+        return rankMap[user.userID] ?? 0
     }
 }
 

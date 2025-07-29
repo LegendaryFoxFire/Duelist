@@ -14,31 +14,33 @@ import SwiftUI
 class motion: ObservableObject {
     @EnvironmentObject var authManager: AuthManager
 
+    //For motion managment
     private let motionManager = CMMotionManager()
     private var lastUpdateTime: CFTimeInterval = CACurrentMediaTime()
     private var lastAccelleration: Double = 0
     private var lastyaw: Double = 0
     
+    //Action Managment
     private var previousAction: Action = .idle
-    
     private var actualAction: [Action] = []
     
+    //Updating yaw to be better
     private var yawHistory: [Double] = []
     private let maxYawHistory = 15
     
+    //For sword rotations in the gameplay_view
     private var angleHistory: [Double] = []
     private let maxAngleHistory = 5
     private var baseAngle: Double = 0
     private var hasSetBaseAngle = false
-    
-    weak var delegate: GameplayVM?
-
     @Published var deviceMotionData = DeviceMotionData(yaw: 0, acceleration: 0, action: Action.idle)
     @Published var swordAngle: Angle = .zero
     
+    //Letting GameplayVM handle health and game updates
+    weak var delegate: GameplayVM?
 
     init() {
-            startDeviceMotionUpdates()
+        startDeviceMotionUpdates()
     }
     
     func degrees(radians:Double) -> Double {
@@ -108,17 +110,7 @@ class motion: ObservableObject {
             }
         }
         
-        if((authManager.user?.volumeOn) != nil){
-            switch currentAction {
-            case .attack:
-                AudioManager.shared.playSound(named: "Strikes 1",)
-            case .block:
-                AudioManager.shared.playSound(named: "Block 2",)
-            default:
-                break
-            }
-        }
-        
+
     }
 
     deinit {
@@ -189,7 +181,7 @@ class motion: ObservableObject {
         for i in 1..<history.count - 1 {
             let delta1 = history[i] - history[i - 1]
             let delta2 = history[i + 1] - history[i]
-            if delta1 * delta2 < 0 {
+            if delta1 * delta2 < 0 { //Changes directions, pain
                 changes += 1
             }
         }

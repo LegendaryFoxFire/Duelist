@@ -44,17 +44,12 @@ class GameplayVM: ObservableObject {
     init(multipeer: Multiplayer, currentUser: String) {
         self.multipeer = multipeer
         self.currentUser = currentUser
-        
-        print("🚀 GameplayVM initialized for user: \(currentUser)")
-        
         self.opponentUser = multipeer.session.connectedPeers.first?.displayName
-        print("🤝 Opponent set to: \(opponentUser ?? "nil")")
 
         multipeer.$receivedGameState
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
-                print("📨 Received GameState: action=\(state.action), health=\(state.health), opponent=\(state.opponent), isReplayRequest=\(state.isReplayRequest ?? false)")
                 self?.handleReceivedGameState(state)
             }
             .store(in: &cancellables)
@@ -62,9 +57,6 @@ class GameplayVM: ObservableObject {
     
     private func handleReceivedGameState(_ state: GameState) {
         if let isReplayRequest = state.isReplayRequest, isReplayRequest == true {
-            print("🔄 REMATCH REQUEST DETECTED!")
-            print("🔄 Current processing state: \(isProcessingRematch)")
-            
             if !isProcessingRematch {
                 isProcessingRematch = true
                 shouldStartRematch = true
@@ -74,29 +66,25 @@ class GameplayVM: ObservableObject {
                     self?.isProcessingRematch = false
                 }
             } else {
-                print("🔄 Ignoring duplicate rematch request")
+                print("Ignoring duplicate")
             }
             return
         }
         
-        print("🎲 Processing normal game state update")
         opponentAction = state.action
         opponentHealth = state.health
         
         if opponentUser == nil {
             opponentUser = state.opponent
-            print("🤝 Updated opponent to: \(state.opponent)")
         }
     }
     
     func requestReplay() {
         guard let opponent = opponentUser else {
-            print("❌ Error: No opponent user found for replay request")
+            print("Error: No opponent user found for replay request")
             return
         }
-        
-        print("🔄 Requesting replay with opponent: \(opponent)")
-        
+                
         let replayState = GameState(
             action: .idle,
             health: 30,
@@ -104,7 +92,6 @@ class GameplayVM: ObservableObject {
             isReplayRequest: true
         )
         
-        print("📤 Sending replay request: \(replayState)")
         multipeer.send(gameState: replayState)
         resetGame()
     }
@@ -120,7 +107,6 @@ class GameplayVM: ObservableObject {
         case .idle:
             break
         }
-        print("📊 Action tracked: \(action), Total: \(totalActions)")
     }
     
     func getPlayStyle() -> PlayStyle {
@@ -148,7 +134,6 @@ class GameplayVM: ObservableObject {
     }
     
     func resetGame() {
-        print("🔄 Resetting game state")
         DispatchQueue.main.async { [weak self] in
             self?.localHealth = 30
             self?.opponentHealth = 30
@@ -166,7 +151,6 @@ class GameplayVM: ObservableObject {
     }
 
     func handleLocalAction(_ action: Action) {
-        print("🎮 Local action initiated: \(action), Opponent action: \(opponentAction)")
         trackAction(action)
         myAction = action
         sendState(action: action)
@@ -179,8 +163,6 @@ class GameplayVM: ObservableObject {
     }
     
     func sendState(action: Action) {
-        print("📤 Sending state: action=\(action), health=\(localHealth), user=\(currentUser)")
-        
         let state = GameState(
             action: action,
             health: localHealth,
@@ -193,29 +175,23 @@ class GameplayVM: ObservableObject {
     private func evaluateDamage() {
         let currentPair = (myAction, opponentAction)
         guard currentPair != lastEvaluatedPair else {
-            print("🎯 Skipping damage evaluation - same pair as last time")
             return
         }
         lastEvaluatedPair = currentPair
 
-        print("🎯 Evaluating damage: my=\(myAction), opponent=\(opponentAction)")
 
         if opponentAction == .attack && myAction != .block {
             localHealth = max(localHealth - 10, 0)
-            print("💔 Took damage! Health: \(localHealth)")
         }
 
         if myAction == .attack && opponentAction != .block {
             opponentHealth = max(opponentHealth - 10, 0)
-            print("⚔️ Dealt damage! Opponent health: \(opponentHealth)")
         }
         
         if localHealth <= 0 {
             winner = "Opponent"
-            print("😢 Game over - Opponent wins")
         } else if opponentHealth <= 0 {
             winner = "You"
-            print("🎉 Game over - You win!")
         }
     }
 }

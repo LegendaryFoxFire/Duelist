@@ -5,8 +5,6 @@
 //  Created by John Bukoski on 7/15/25.
 //
 
-//FIXME: THESE ARE JUST DUMMY LISTS THAT THE DATABASE WILL POPULATE FOR EACH USER
-
 import Foundation
 
 struct Friend: Identifiable, Hashable { //Hashable so we can make it into a set

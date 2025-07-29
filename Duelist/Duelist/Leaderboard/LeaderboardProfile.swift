@@ -10,12 +10,12 @@ import SwiftUI
 
 struct LeaderboardProfile: View {
     @EnvironmentObject var nav: NavigationHandler
-    @EnvironmentObject var globalUsersManager: GlobalUsersManager
     
-    var rank: Int {
-        return globalUsersManager.globalUserList.firstIndex(where: { $0.id == friend.id })! + 1
-    }
     var friend: Friend
+    
+    @State private var userRank: Int = 0
+    @State private var isLoadingRank = true
+    
     var body: some View {
         BackButton(label:"Leaderboard", destination: .leaderboard) {
             VStack{
@@ -43,9 +43,15 @@ struct LeaderboardProfile: View {
                     GridRow {
                         D_Label(title: "Rank: ", fontSize: Globals.SmallTitleFontSize)
                             .font(.title)
-                            .bold(true)
-                        D_Label(title: String(rank), fontSize: Globals.SmallTitleFontSize)
-                            .font(.title)
+                            .bold()
+                        
+                        if isLoadingRank {
+                            ProgressView()
+                                .scaleEffect(0.8)
+                        } else {
+                            D_Label(title: String(userRank), fontSize: Globals.SmallTitleFontSize)
+                                .font(.title)
+                        }
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -57,6 +63,32 @@ struct LeaderboardProfile: View {
                 )
                 .padding(.horizontal)
                 Spacer()
+            }
+        }
+        .onAppear {
+            calculateUserRank()
+        }
+    }
+    
+    private func calculateUserRank() {
+        Task {
+            do {
+                await MainActor.run {
+                    isLoadingRank = true
+                }
+                
+                let rank = try await FirebaseService.shared.getUserRank(for: friend.id.uuidString)
+                
+                await MainActor.run {
+                    userRank = rank
+                    isLoadingRank = false
+                }
+            } catch {
+                print("Error getting rank: \(error)")
+                await MainActor.run {
+                    userRank = 0
+                    isLoadingRank = false
+                }
             }
         }
     }

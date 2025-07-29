@@ -9,8 +9,6 @@
     struct Login: View {
         @EnvironmentObject var authManager: AuthManager
         @EnvironmentObject var nav: NavigationHandler
-        @EnvironmentObject var userManager: CurrentUserManager
-        @EnvironmentObject var globalUsersManager: GlobalUsersManager
          
         @State private var email: String = ""
         @State private var password: String = ""

@@ -3,6 +3,8 @@
 issues:
 
 extensions:
+stop using friend struct and just use user one
+
 in Friendslist VM:
 /*
  chatgpt came up with this to filter based solely on IDs for efficiency

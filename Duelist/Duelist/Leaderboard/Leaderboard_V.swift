@@ -71,7 +71,7 @@ struct Leaderboard_V: View {
                                         } label: {
                                             HStack {
                                                 // Rank number
-                                                Text("\(getRankForUser(user, in: sortedUsers))")
+                                                D_Label(title: "\(getRankForUser(user, in: sortedUsers))", fontSize: Globals.HeadingFontSize)
                                                     .font(.headline)
                                                     .foregroundColor(.primary)
                                                     .frame(width: 30)

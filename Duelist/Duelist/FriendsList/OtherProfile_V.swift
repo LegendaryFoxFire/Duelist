@@ -56,7 +56,7 @@ struct OtherProfile_V: View {
                             GridRow {
                                 D_Label(title: "Rank: ", fontSize: Globals.SmallTitleFontSize)
                                     .font(.title)
-                                    .bold(true)
+                                    .bold()
                                 D_Label(title: userRank > 0 ? String(userRank) : "Loading...", fontSize: Globals.SmallTitleFontSize)
                                     .font(.title)
                             }
@@ -73,6 +73,7 @@ struct OtherProfile_V: View {
                     
                     Spacer()
                 }
+                .padding(.top, Globals.ProfileVSpacing)
             }
         }
         .task {
@@ -84,6 +85,7 @@ struct OtherProfile_V: View {
             Text(errorMessage)
         }
     }
+
     
     private func getBackButtonLabel() -> String {
         switch sourceDestination {
